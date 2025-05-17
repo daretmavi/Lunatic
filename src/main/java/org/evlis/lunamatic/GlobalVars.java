@@ -20,6 +20,7 @@ public class GlobalVars {
     public static Boolean harvestMoonEnabled = true;
     public static Boolean newMoonEnabled = true;
     public static Boolean bloodMoonEnabled = true;
+    public static Boolean bloodMoonSpawnVex = true;
     // Dice sides for blood & harvest
     public static Integer bloodMoonDieSides = 2;
     public static Integer harvestMoonDieSides = 2;

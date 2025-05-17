@@ -32,7 +32,7 @@ public class EntitySpawn implements Listener {
         if (GlobalVars.bloodMoonToday && GlobalVars.bloodMoonNow) {
             Difficulty difficulty = world.getDifficulty();
             long time = world.getTime();
-            if (entity instanceof Monster) { // Check if the entity is a hostile mob
+            if (entity instanceof Monster && GlobalVars.bloodMoonSpawnVex) { // Check if the entity is a hostile mob
                 Monster monster = (Monster) entity;
                 if (monster instanceof Creeper) {
                     event.setCancelled(true);
