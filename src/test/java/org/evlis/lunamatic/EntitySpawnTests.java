@@ -22,7 +22,7 @@ public class EntitySpawnTests {
 
     @BeforeEach
     void setUp() {
-        System.out.println("Test setup started");
+        System.out.println("CreeperSpawn test setup started");
         server = MockBukkit.mock();
         world = new WorldMock();
         server.addWorld(world);
@@ -44,11 +44,9 @@ public class EntitySpawnTests {
     void testCreeperSpawnDuringBloodMoonIsCancelled() {
         CreeperMock creeper = new CreeperMock(server, UUID.randomUUID());
         EntitySpawnEvent event = new EntitySpawnEvent(creeper);
-        System.out.println("Test creeper 001");
         //entitySpawn.onEntitySpawn(event);
         try {
             entitySpawn.onEntitySpawn(event);
-            System.out.println("Test creeper 002");
         } catch (Throwable t) {
             t.printStackTrace();
             fail("Exception thrown during event handler: " + t.getMessage());
