@@ -11,9 +11,14 @@ group = "org.evlis"
 version = "1.3.1"
 
 val targetJavaVersion = 21
+val junitVersion = "5.12.2"
 
 repositories {
     mavenCentral()
+    maven {
+        name = "jitpack.io"
+        url = URI("https://jitpack.io")
+    }
     maven {
         name = "papermc-repo"
         url = URI("https://repo.papermc.io/repository/maven-public/")
@@ -32,12 +37,12 @@ dependencies {
     compileOnly("io.papermc.paper:paper-api:1.21.4-R0.1-SNAPSHOT")
     implementation("co.aikar:acf-paper:0.5.1-SNAPSHOT")
     implementation("net.kyori:adventure-api:4.18.0")
-
-    testImplementation("com.github.seeseemelk:MockBukkit-v1.21:3.133.1")
-    testImplementation("com.github.seeseemelk:MockBukkit-v1.21:3.133.1")
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.0")
-
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.10.0")
+    // MockBukkit for unit tests
+    testImplementation("com.github.MockBukkit:MockBukkit:v4.49.0")
+    // Use the JUnit BOM to align needed 5.12 artifacts with MockBukkit
+    testImplementation(platform("org.junit:junit-bom:5.12.2"))
+    testImplementation("org.junit.jupiter:junit-jupiter")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
 java {
