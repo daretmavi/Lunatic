@@ -39,8 +39,6 @@ public class GlobalVars {
     public static final double bloodmoonDetectionRange = 32.0;
     // worlds to exclude entirely from moon effects
     public static List<String> disabledWorlds = List.of();
-    // seed randomness with server time
-    public static Random generateRandDouble = new Random(Bukkit.getServer().getWorlds().getFirst().getFullTime());
     // map of how many armor pieces to apply
     public static final Map<Difficulty, Integer> difficultyArmorMap = Map.of(
             Difficulty.PEACEFUL, 0,

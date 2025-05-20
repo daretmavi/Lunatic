@@ -48,7 +48,7 @@ public class NightSummons {
             Bukkit.getRegionScheduler().runDelayed(plugin, location, delayed -> {
                 if (!entity.isDead()) {
                     // Spawn particle effects at the entity's despawn location
-                    entity.getWorld().spawnParticle(despawnParticle, entity.getLocation(), 20, 0.4, 0.6, 0.4);
+                    entity.getWorld().spawnParticle(despawnParticle, entity.getLocation(), 24, 0.4, 0.6, 0.4);
                     entity.remove();
                 }
             }, despawnDelay);
