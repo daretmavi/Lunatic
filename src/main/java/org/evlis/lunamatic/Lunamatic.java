@@ -33,8 +33,7 @@ public final class Lunamatic extends JavaPlugin {
     private static final Logger logger = Logger.getLogger(Lunamatic.class.getName());
     private static final String REQUIRED_VERSION = "1.21";
     public static final int REQUIRED_LANG_VER = 2;
-    private static final String API_URL = """
-            https://api.modrinth.com/v2/project/lunamatic/version""";
+    private static final String API_URL ="https://api.modrinth.com/v2/project/lunamatic/version";
 
     @Override
     public void onEnable() {
@@ -118,6 +117,7 @@ public final class Lunamatic extends JavaPlugin {
             getConfig().addDefault("newMoonEnabled", true);
             getConfig().addDefault("harvestMoonEnabled", true);
             getConfig().addDefault("bloodMoonEnabled", true);
+            getConfig().addDefault("bloodMoonSpawnVex", true);
             getConfig().addDefault("bloodMoonDieSides", 2);
             getConfig().addDefault("harvestMoonDieSides", 2);
 
@@ -133,6 +133,7 @@ public final class Lunamatic extends JavaPlugin {
             GlobalVars.newMoonEnabled = getConfig().getBoolean("newMoonEnabled");
             GlobalVars.harvestMoonEnabled = getConfig().getBoolean("harvestMoonEnabled");
             GlobalVars.bloodMoonEnabled = getConfig().getBoolean("bloodMoonEnabled");
+            GlobalVars.bloodMoonSpawnVex = getConfig().getBoolean("bloodMoonSpawnVex");
             GlobalVars.bloodMoonDieSides = getConfig().getInt("bloodMoonDieSides");
             GlobalVars.harvestMoonDieSides = getConfig().getInt("harvestMoonDieSides");
         } catch (Exception e) {
