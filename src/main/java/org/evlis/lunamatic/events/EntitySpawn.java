@@ -5,25 +5,26 @@ import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntitySpawnEvent;
-import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.evlis.lunamatic.GlobalVars;
 import org.evlis.lunamatic.Lunamatic;
-import org.evlis.lunamatic.utilities.Nightwalker;
+import org.evlis.lunamatic.utilities.NightSummons;
 
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 
 import static org.evlis.lunamatic.utilities.EquipArmor.equipRandomChainmailArmor;
 
 public class EntitySpawn implements Listener {
 
+    Plugin plugin = Lunamatic.getInstance();
     // Custom detection range in blocks (default is 16 for most mobs)
     private static final double BLODMOON_DETECTION_RANGE = 32.0;
-    private final Nightwalker nightwalker = new Nightwalker();
+    private final NightSummons nightsummon = new NightSummons(plugin);
+
+    int MAX_ALLAYS_PER_WORLD = 20;
+    int MAX_VEXES_PER_WORLD = 20;
 
     @EventHandler
     public void onEntitySpawn(EntitySpawnEvent event) {
@@ -34,9 +35,10 @@ public class EntitySpawn implements Listener {
             long time = world.getTime();
             if (entity instanceof Monster) { // Check if the entity is a hostile mob
                 Monster monster = (Monster) entity;
-                if (monster instanceof Creeper) {
+                int ticksTilDawn = 24000 - (int)time;
+                if (monster instanceof Creeper && world.getEntitiesByClass(Vex.class).size() < MAX_VEXES_PER_WORLD) {
                     event.setCancelled(true);
-                    nightwalker.SummonVex(event.getLocation());
+                    nightsummon.SummonVex(event.getLocation(), ticksTilDawn);
                 }
                 Location mobLocation = monster.getLocation();
                 Player nearestPlayer = findNearestPlayer(mobLocation);
@@ -47,7 +49,6 @@ public class EntitySpawn implements Listener {
                     // Emmiters to consider: SCULK_SOUL, PORTAL, WITCH, WHITE_ASH
                     monster.getWorld().spawnParticle(Particle.WITCH, mobLocation, 30);
                     // make all monsters faster and expand field of view
-                    int ticksTilDawn = 24000 - (int)time;
                     monster.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, ticksTilDawn, potionAmp));
                     monster.addPotionEffect(new PotionEffect(PotionEffectType.JUMP_BOOST, ticksTilDawn, potionAmp));
                     // equip a random chainmail armor
@@ -57,13 +58,18 @@ public class EntitySpawn implements Listener {
                 }
             }
         } else if (GlobalVars.harvestMoonToday && GlobalVars.harvestMoonNow) {
+            long time = world.getTime();
+            int ticksTilDawn = 24000 - (int)time;
             // don't allow monster spawning during harvest moon
             if (entity instanceof Monster) {
+                Monster monster = (Monster) entity;
                 event.setCancelled(true);
+                if (monster instanceof Creeper && world.getEntitiesByClass(Allay.class).size() < MAX_ALLAYS_PER_WORLD) {
+                    nightsummon.SummonAllay(event.getLocation(), ticksTilDawn);
+                }
             } else if (entity instanceof Bee bee) {
-                long time = world.getTime();
                 // stop bees from entering hives during harvest moon
-                bee.setCannotEnterHiveTicks(24000 - (int)time);
+                bee.setCannotEnterHiveTicks(ticksTilDawn);
                 // give the bee nectar so it can pollinate
                 bee.setHasNectar(true);
                 // reset bee pollination count
