@@ -5,6 +5,8 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
 
+import static org.evlis.lunamatic.GlobalVars.generateRandDouble;
+
 public class RandomItems {
     private static class WeightedItem {
         final ItemStack item;
@@ -26,7 +28,7 @@ public class RandomItems {
     );
 
     public static ItemStack getAllayHoldItem() {
-        double roll = Math.random() * 100;
+        double roll = generateRandDouble.nextDouble() * 100;
         double cumulative = 0.0;
         for (WeightedItem entry : allayHoldItems) {
             cumulative += entry.chance;

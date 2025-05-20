@@ -11,6 +11,8 @@ fullMoonEnabled: true
 newMoonEnabled: true
 ## Ignored unless fullMoonEnabled == true
 harvestMoonEnabled: true
+## Enable Allay spawning while harvest moon is active
+harvestMoonSpawnAllay: true
 ## Ignored unless newMoonEnabled == true
 bloodMoonEnabled: true
 ## Enable Vex spawning while blood moon is active

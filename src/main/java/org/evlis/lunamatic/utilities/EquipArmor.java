@@ -13,8 +13,6 @@ import java.util.Random;
 
 public class EquipArmor {
 
-    private static final Random random = new Random();
-
     public static void equipRandomChainmailArmor(Monster monster, int armorCount) {
         // Define the possible pieces of chainmail armor
         List<ItemStack> chainmailArmor = Arrays.asList(

@@ -1,10 +1,12 @@
 package org.evlis.lunamatic;
 
 import io.papermc.paper.world.MoonPhase;
+import org.bukkit.Bukkit;
 import org.bukkit.Difficulty;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 public class GlobalVars {
     // Test flag
@@ -18,6 +20,7 @@ public class GlobalVars {
     // enabled moons:
     public static Boolean fullMoonEnabled = true;
     public static Boolean harvestMoonEnabled = true;
+    public static Boolean harvestMoonSpawnAllay = true;
     public static Boolean newMoonEnabled = true;
     public static Boolean bloodMoonEnabled = true;
     public static Boolean bloodMoonSpawnVex = true;
@@ -36,6 +39,8 @@ public class GlobalVars {
     public static final double bloodmoonDetectionRange = 32.0;
     // worlds to exclude entirely from moon effects
     public static List<String> disabledWorlds = List.of();
+    // seed randomness with server time
+    public static Random generateRandDouble = new Random(Bukkit.getServer().getWorlds().getFirst().getFullTime());
     // map of how many armor pieces to apply
     public static final Map<Difficulty, Integer> difficultyArmorMap = Map.of(
             Difficulty.PEACEFUL, 0,

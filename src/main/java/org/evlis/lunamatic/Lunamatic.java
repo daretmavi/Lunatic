@@ -116,6 +116,7 @@ public final class Lunamatic extends JavaPlugin {
             getConfig().addDefault("fullMoonEnabled", true);
             getConfig().addDefault("newMoonEnabled", true);
             getConfig().addDefault("harvestMoonEnabled", true);
+            getConfig().addDefault("harvestMoonSpawnAllay", true);
             getConfig().addDefault("bloodMoonEnabled", true);
             getConfig().addDefault("bloodMoonSpawnVex", true);
             getConfig().addDefault("bloodMoonDieSides", 2);
@@ -132,6 +133,7 @@ public final class Lunamatic extends JavaPlugin {
             GlobalVars.fullMoonEnabled = getConfig().getBoolean("fullMoonEnabled");
             GlobalVars.newMoonEnabled = getConfig().getBoolean("newMoonEnabled");
             GlobalVars.harvestMoonEnabled = getConfig().getBoolean("harvestMoonEnabled");
+            GlobalVars.harvestMoonSpawnAllay = getConfig().getBoolean("harvestMoonSpawnAllay");
             GlobalVars.bloodMoonEnabled = getConfig().getBoolean("bloodMoonEnabled");
             GlobalVars.bloodMoonSpawnVex = getConfig().getBoolean("bloodMoonSpawnVex");
             GlobalVars.bloodMoonDieSides = getConfig().getInt("bloodMoonDieSides");

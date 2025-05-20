@@ -33,10 +33,10 @@ public class EntitySpawn implements Listener {
         if (GlobalVars.bloodMoonToday && GlobalVars.bloodMoonNow) {
             Difficulty difficulty = world.getDifficulty();
             long time = world.getTime();
-            if (entity instanceof Monster && GlobalVars.bloodMoonSpawnVex) { // Check if the entity is a hostile mob
+            if (entity instanceof Monster) { // Check if the entity is a hostile mob
                 Monster monster = (Monster) entity;
                 int ticksTilDawn = 24000 - (int)time;
-                if (monster instanceof Creeper && world.getEntitiesByClass(Vex.class).size() < MAX_VEXES_PER_WORLD) {
+                if (monster instanceof Creeper && world.getEntitiesByClass(Vex.class).size() < MAX_VEXES_PER_WORLD && GlobalVars.bloodMoonSpawnVex) {
                     event.setCancelled(true);
                     nightsummon.SummonVex(event.getLocation(), ticksTilDawn);
                 }
@@ -64,7 +64,7 @@ public class EntitySpawn implements Listener {
             if (entity instanceof Monster) {
                 Monster monster = (Monster) entity;
                 event.setCancelled(true);
-                if (monster instanceof Creeper && world.getEntitiesByClass(Allay.class).size() < MAX_ALLAYS_PER_WORLD) {
+                if (monster instanceof Creeper && world.getEntitiesByClass(Allay.class).size() < MAX_ALLAYS_PER_WORLD && GlobalVars.harvestMoonSpawnAllay) {
                     nightsummon.SummonAllay(event.getLocation(), ticksTilDawn);
                 }
             } else if (entity instanceof Bee bee) {
