@@ -102,6 +102,7 @@ jobs:
             echo "Status: $healthy"
             if [[ "$healthy" == *"online"* ]]; then
               echo "Server is online!"
+              docker exec -i test-purpur-server rcon-cli "luma cyclemoonstates"
               exit 0
             fi
             sleep 6
@@ -110,6 +111,20 @@ jobs:
           exit 1
       - name: Retrieve server logs
         run: docker logs test-paper-server
+      - name: Check Minecraft server logs for errors
+        run: |
+          echo "Checking container logs for errors..."
+          LOG_OUTPUT=$(docker logs test-paper-server 2>&1)
+
+          ERROR_LINES=$(echo "$LOG_OUTPUT" | grep 'ERROR]:' || true)
+
+          if [ -n "$ERROR_LINES" ]; then
+            echo "Errors were found in the server logs:"
+            echo "$ERROR_LINES"
+            exit 1
+          else
+            echo "No errors found in the container logs."
+          fi
       - name: Stop and clean up
         if: always()
         run: docker rm -f test-paper-server || true
@@ -146,6 +161,7 @@ jobs:
             echo "Status: $healthy"
             if [[ "$healthy" == *"online"* ]]; then
               echo "Server is online!"
+              docker exec -i test-purpur-server rcon-cli "luma cyclemoonstates"
               exit 0
             fi
             sleep 6
@@ -154,6 +170,20 @@ jobs:
           exit 1
       - name: Retrieve server logs
         run: docker logs test-purpur-server
+      - name: Check Minecraft server logs for errors
+        run: |
+          echo "Checking container logs for errors..."
+          LOG_OUTPUT=$(docker logs test-purpur-server 2>&1)
+
+          ERROR_LINES=$(echo "$LOG_OUTPUT" | grep 'ERROR]:' || true)
+
+          if [ -n "$ERROR_LINES" ]; then
+            echo "Errors were found in the server logs:"
+            echo "$ERROR_LINES"
+            exit 1
+          else
+            echo "No errors found in the container logs."
+          fi
       - name: Stop and clean up
         if: always()
         run: docker rm -f test-purpur-server || true
