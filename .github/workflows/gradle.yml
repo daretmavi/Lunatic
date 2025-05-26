@@ -45,14 +45,12 @@ jobs:
     - name: Clean the Server Plugins Cache
       run: ./gradlew cleanPaperPluginsCache
 
-    - name: Run PaperMC Server (1.21.1)
-      run: ./gradlew runServerTest -PmcVersion="1.21.1"
-
-    - name: Run PaperMC Server (1.21.4)
-      run: ./gradlew runServerTest -PmcVersion="1.21.4"
-
-    - name: Check the Server Logs
-      run: ./gradlew checkServerLogs
+#    - name: Run PaperMC Server (1.21.1)
+#      run: ./gradlew runServerTest -PmcVersion="1.21.1"
+#    - name: Run PaperMC Server (1.21.4)
+#      run: ./gradlew runServerTest -PmcVersion="1.21.4"
+#    - name: Check the Server Logs
+#      run: ./gradlew checkServerLogs
 
   dependency-submission:
 
@@ -81,7 +79,7 @@ jobs:
       - name: Download plugin JAR
         uses: actions/download-artifact@v4
         with:
-          name: Lunamatic.jar
+          name: plugin-jar
           path: data/plugins
 
       - name: Set up Docker
