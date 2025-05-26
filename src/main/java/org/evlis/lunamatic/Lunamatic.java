@@ -5,6 +5,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import org.bukkit.Bukkit;
+import org.bukkit.World;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.evlis.lunamatic.commands.LumaCommand;
 import org.evlis.lunamatic.events.*;
@@ -78,6 +79,7 @@ public final class Lunamatic extends JavaPlugin {
             checkForUpdates(currentVersion);
         }
         // Class Initialization
+        GlobalVars.initializeWorldSettings();
         Scheduler schedule = new Scheduler();
         timeSkip = new TimeSkip();
         playerJoin = new PlayerJoin();

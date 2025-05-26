@@ -79,17 +79,18 @@ public class LumaCommand extends BaseCommand {
         // this command is player only!!!
         // get the current world & moon state:
         World world = player.getWorld();
+        String worldName = world.getName();
         @NotNull MoonPhase moonPhase = world.getMoonPhase();
         // Display GlobalVars status
         player.sendMessage(getLangManager().getTranslation("cmd_lang") + GlobalVars.lang);
         player.sendMessage(getLangManager().getTranslation("cmd_blood_moon_enabled") + GlobalVars.bloodMoonEnabled);
-        player.sendMessage(getLangManager().getTranslation("cmd_blood_moon_now") + GlobalVars.bloodMoonNow);
-        player.sendMessage(getLangManager().getTranslation("cmd_blood_moon_today") + GlobalVars.bloodMoonToday);
+        player.sendMessage(getLangManager().getTranslation("cmd_blood_moon_now") + GlobalVars.currentMoonStateMap.get(worldName).isBloodMoonNow());
+        player.sendMessage(getLangManager().getTranslation("cmd_blood_moon_today") + GlobalVars.currentMoonStateMap.get(worldName).isBloodMoonToday());
         player.sendMessage(getLangManager().getTranslation("cmd_harv_moon_enabled") + GlobalVars.harvestMoonEnabled);
-        player.sendMessage(getLangManager().getTranslation("cmd_harv_moon_now") + GlobalVars.harvestMoonNow);
-        player.sendMessage(getLangManager().getTranslation("cmd_harv_moon_today") + GlobalVars.harvestMoonToday);
+        player.sendMessage(getLangManager().getTranslation("cmd_harv_moon_now") + GlobalVars.currentMoonStateMap.get(worldName).isHarvestMoonNow());
+        player.sendMessage(getLangManager().getTranslation("cmd_harv_moon_today") + GlobalVars.currentMoonStateMap.get(worldName).isHarvestMoonToday());
         player.sendMessage(getLangManager().getTranslation("cmd_disabled_worlds") + String.join(", ", GlobalVars.disabledWorlds));
-        player.sendMessage(getLangManager().getTranslation("cmd_curr_phase") + world.getName() + ": " + moonPhase);
+        player.sendMessage(getLangManager().getTranslation("cmd_curr_phase") + worldName + ": " + moonPhase);
     }
 
     @Subcommand("nextmoon")
@@ -99,7 +100,8 @@ public class LumaCommand extends BaseCommand {
         // this command is player only!!!
         // get the current world & moon state:
         World world = player.getWorld();
-        ResetFlags.resetAll();
+        String worldName = world.getName();
+        ResetFlags.resetAll(worldName);
         // Execute mutation of world time inside a global region scheduler for Folia.
         plugin.getServer().getGlobalRegionScheduler().run(plugin, task -> {
             long currentTime = world.getFullTime();
@@ -116,10 +118,11 @@ public class LumaCommand extends BaseCommand {
         // this command is player only!!!
         // get the current world & moon state:
         World world = player.getWorld();
-        ResetFlags.resetAll();
+        String worldName = world.getName();
+        ResetFlags.resetAll(worldName);
         @NotNull MoonPhase moonPhase = world.getMoonPhase();
         if(moonPhase != MoonPhase.NEW_MOON) {
-            ResetFlags.resetAll();
+            ResetFlags.resetAll(worldName);
             long moonskip = (long)GlobalVars.newMoonOffset.getOrDefault(moonPhase, 0);
             logger.info("Skipping ahead by " + moonskip + " seconds.");
             // Execute mutation of world time inside a global region scheduler for Folia.
@@ -127,11 +130,11 @@ public class LumaCommand extends BaseCommand {
                 world.setFullTime(world.getFullTime() + moonskip);
             });
         }
-        if(!GlobalVars.bloodMoonToday){
-            GlobalVars.bloodMoonToday = true;
+        if(!GlobalVars.currentMoonStateMap.get(worldName).isBloodMoonToday()){
+            GlobalVars.currentMoonStateMap.get(worldName).setBloodMoonToday(true);
         }
-        if(world.getTime() >= 13000 && !GlobalVars.bloodMoonNow) {
-            GlobalVars.bloodMoonNow = true;
+        if(world.getTime() >= 13000 && !GlobalVars.currentMoonStateMap.get(worldName).isBloodMoonNow()) {
+            GlobalVars.currentMoonStateMap.get(worldName).setBloodMoonNow(true);
         }
     }
 
@@ -142,7 +145,8 @@ public class LumaCommand extends BaseCommand {
         // this command is player only!!!
         // get the current world & moon state:
         World world = player.getWorld();
-        ResetFlags.resetAll();
+        String worldName = world.getName();
+        ResetFlags.resetAll(worldName);
         @NotNull MoonPhase moonPhase = world.getMoonPhase();
         if(moonPhase != MoonPhase.FULL_MOON) {
             long moonskip = (long)GlobalVars.fullMoonOffset.getOrDefault(moonPhase, 0);
@@ -152,11 +156,11 @@ public class LumaCommand extends BaseCommand {
                 world.setFullTime(world.getFullTime() + moonskip);
             });
         }
-        if(!GlobalVars.harvestMoonToday){
-            GlobalVars.harvestMoonToday = true;
+        if(!GlobalVars.currentMoonStateMap.get(worldName).isHarvestMoonToday()){
+            GlobalVars.currentMoonStateMap.get(worldName).setHarvestMoonToday(true);
         }
-        if(world.getTime() >= 13000 && !GlobalVars.harvestMoonNow) {
-            GlobalVars.harvestMoonNow = true;
+        if(world.getTime() >= 13000 && !GlobalVars.currentMoonStateMap.get(worldName).isHarvestMoonNow()) {
+            GlobalVars.currentMoonStateMap.get(worldName).setHarvestMoonNow(true);
         }
     }
 }

@@ -24,18 +24,19 @@ public class PlayerJoin implements Listener {
         Plugin plugin = Lunamatic.getInstance();
         Player player = event.getPlayer();
         World world = player.getWorld();
+        String worldName = world.getName();
         if (world.getPlayers().isEmpty()) {
             // If the world was empty, there is a chance flags are stuck from
             // the world state the last player left at. Clear all flags to
             // prevent invalid moon states.
-            ResetFlags.resetAll();
+            ResetFlags.resetAll(worldName);
         } else {
             @NotNull MoonPhase moonPhase = world.getMoonPhase();
             long time = world.getTime();
             // harvest moon & blood moon are subsets of the full and new moons,
             // currently cannot be separated without a code rewrite.
             if (moonPhase == MoonPhase.FULL_MOON) {
-                if (GlobalVars.harvestMoonToday) {
+                if (GlobalVars.currentMoonStateMap.get(worldName).isHarvestMoonToday()) {
                     PlayerMessage.Send(player, langManager.getTranslation("harvest_moon_tonight"), NamedTextColor.GOLD);
                 } else {
                     PlayerMessage.Send(player, langManager.getTranslation("full_moon_tonight"), NamedTextColor.YELLOW);
@@ -44,7 +45,7 @@ public class PlayerJoin implements Listener {
                     NightEffects.ApplyMoonlight(plugin, player, MoonPhase.FULL_MOON, (24000 - (int)time));
                 }
             } else if (moonPhase == MoonPhase.NEW_MOON) {
-                if (GlobalVars.bloodMoonToday) {
+                if (GlobalVars.currentMoonStateMap.get(worldName).isBloodMoonToday()) {
                     PlayerMessage.Send(player, langManager.getTranslation("blood_moon_tonight"), NamedTextColor.DARK_RED);
                 } else {
                     PlayerMessage.Send(player, langManager.getTranslation("new_moon_tonight"), NamedTextColor.DARK_GRAY);
@@ -55,7 +56,7 @@ public class PlayerJoin implements Listener {
             } else {
                 // Catch for stuck flags during wrong moon-phase..
                 // TO-DO: find out why this is needed?
-                ResetFlags.resetAll();
+                ResetFlags.resetAll(worldName);
             }
         }
     }

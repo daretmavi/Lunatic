@@ -5,16 +5,16 @@ import org.evlis.lunamatic.GlobalVars;
 
 public class ResetFlags {
 
-    static WorldEffects totoroDance = new WorldEffects();
+    static WorldEffects worldEffects = new WorldEffects();
 
-    public static void resetAll() {
-        GlobalVars.harvestMoonToday = false;
-        GlobalVars.harvestMoonNow = false;
-        GlobalVars.bloodMoonToday = false;
-        GlobalVars.bloodMoonNow = false;
+    public static void resetAll(String worldName) {
+        GlobalVars.currentMoonStateMap.get(worldName).setHarvestMoonToday(false);
+        GlobalVars.currentMoonStateMap.get(worldName).setHarvestMoonNow(false);
+        GlobalVars.currentMoonStateMap.get(worldName).setBloodMoonToday(false);
+        GlobalVars.currentMoonStateMap.get(worldName).setBloodMoonNow(false);
     }
 
     public static void resetTickSpeed(World world) {
-        totoroDance.setRandomTickSpeed(world, 3);
+        worldEffects.setRandomTickSpeed(world, 3);
     }
 }
