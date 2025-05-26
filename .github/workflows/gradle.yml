@@ -72,3 +72,38 @@ jobs:
     # See: https://github.com/gradle/actions/blob/main/dependency-submission/README.md
     - name: Generate and submit dependency graph
       uses: gradle/actions/dependency-submission@af1da67850ed9a4cedd57bfd976089dd991e2582 # v4.0.0
+
+  test-paper:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download plugin JAR
+        uses: actions/download-artifact@v4
+        with:
+          name: Lunamatic.jar
+          path: data/plugins
+
+      - name: Set up Docker
+        uses: docker/setup-buildx-action@v3
+
+      - name: Run PaperMC Server in Docker with plugin
+        run: |
+            docker run -d \
+            --name test-paper-server \
+            -e EULA=TRUE \
+            -e TYPE=PAPER \
+            -e VERSION=1.21.1 \
+            -v ${{ github.workspace }}data/plugins:/data/plugins \
+            -p 25565:25565 \
+            itzg/minecraft-server
+            
+            echo "Waiting for server to start..."
+            sleep 60
+            
+            echo "Fetching logs for sanity check:"
+            docker logs test-paper-server
+
+      - name: Stop and clean up
+        if: always()
+        run: docker rm -f test-paper-server
