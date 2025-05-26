@@ -60,9 +60,9 @@ public class GlobalVars {
             MoonPhase.LAST_QUARTER, 48000,
             MoonPhase.WANING_CRESCENT, 24000,
             MoonPhase.NEW_MOON, 0,
-            MoonPhase.WAXING_CRESCENT, 120000,
+            MoonPhase.WAXING_CRESCENT, 168000,
             MoonPhase.FIRST_QUARTER, 144000,
-            MoonPhase.WAXING_GIBBOUS, 168000
+            MoonPhase.WAXING_GIBBOUS, 120000
     );
     // map for time between current moon phase and the next full moon
     public static final Map<MoonPhase, Integer> fullMoonOffset = Map.of(
