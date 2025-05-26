@@ -183,8 +183,9 @@ public class LumaCommand extends BaseCommand {
     @CommandPermission("luma.command.cyclemoonstates")
     @Description("Cycles through all moon states in default world, TESTING ONLY")
     public void cycleEveryMoonState(CommandSender sender) {
-        if (!(sender instanceof ConsoleCommandSender)) {
+        if (sender instanceof Player) {
             sender.sendMessage("This is a console-only DEBUG command.");
+            return;
         }
         World world = Bukkit.getWorlds().getFirst();
         String worldName = world.getName(); // Default world name

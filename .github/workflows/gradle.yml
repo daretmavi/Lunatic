@@ -88,9 +88,10 @@ jobs:
             --name test-paper-server \
             -e EULA=TRUE \
             -e TYPE=PAPER \
+            -e ONLINE_MODE=FALSE \
             -e VERSION=1.21.1 \
             -v ${{ github.workspace }}/plugins:/plugins \
-            -p 25565:25565 \
+            -p 127.0.0.1:25565:25565 \
             itzg/minecraft-server:latest
             echo "Starting Paper server..."
             sleep 1
@@ -102,22 +103,22 @@ jobs:
             echo "Status: $healthy"
             if [[ "$healthy" == *"online"* ]]; then
               echo "Server is online!"
-              docker exec -i test-purpur-server rcon-cli "luma cyclemoonstates"
+              docker exec -i test-paper-server rcon-cli "luma cyclemoonstates"
               exit 0
             fi
             sleep 6
           done
           echo "Server failed health check, timeout."
           exit 1
+      - name: Stop the server
+        run: docker stop test-paper-server || true
       - name: Retrieve server logs
         run: docker logs test-paper-server
       - name: Check Minecraft server logs for errors
         run: |
           echo "Checking container logs for errors..."
           LOG_OUTPUT=$(docker logs test-paper-server 2>&1)
-
           ERROR_LINES=$(echo "$LOG_OUTPUT" | grep 'ERROR]:' || true)
-
           if [ -n "$ERROR_LINES" ]; then
             echo "Errors were found in the server logs:"
             echo "$ERROR_LINES"
@@ -149,7 +150,7 @@ jobs:
           -e TYPE=PURPUR \
           -e VERSION=1.21.1 \
           -v ${{ github.workspace }}/plugins:/plugins \
-          -p 25565:25565 \
+          -p 127.0.0.1:25565:25565 \
           itzg/minecraft-server:latest
           echo "Starting Purpur server..."
           sleep 1
@@ -168,15 +169,15 @@ jobs:
           done
           echo "Server failed health check, timeout."
           exit 1
+      - name: Stop the server
+        run: docker stop test-purpur-server || true
       - name: Retrieve server logs
         run: docker logs test-purpur-server
       - name: Check Minecraft server logs for errors
         run: |
           echo "Checking container logs for errors..."
           LOG_OUTPUT=$(docker logs test-purpur-server 2>&1)
-
           ERROR_LINES=$(echo "$LOG_OUTPUT" | grep 'ERROR]:' || true)
-
           if [ -n "$ERROR_LINES" ]; then
             echo "Errors were found in the server logs:"
             echo "$ERROR_LINES"
