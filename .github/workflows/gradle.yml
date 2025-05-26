@@ -21,39 +21,33 @@ jobs:
       contents: read
 
     steps:
-    - uses: actions/checkout@v4
-    - name: Set up JDK 21
-      uses: actions/setup-java@v4
-      with:
-        java-version: '21'
-        distribution: 'temurin'
-        cache: 'gradle'
+      - uses: actions/checkout@v4
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: 'gradle'
 
-    # Configure Gradle for optimal use in GitHub Actions, including caching of downloaded dependencies.
-    # See: https://github.com/gradle/actions/blob/main/setup-gradle/README.md
-    - name: Setup Gradle
-      uses: gradle/actions/setup-gradle@v4 # v4.0.0
+      # Configure Gradle for optimal use in GitHub Actions, including caching of downloaded dependencies.
+      # See: https://github.com/gradle/actions/blob/main/setup-gradle/README.md
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4 # v4.0.0
 
-    - name: Execute Gradle build
-      run: ./gradlew build
+      - name: Execute Gradle build
+        run: ./gradlew build
 
-    - name: Upload plugin JAR
-      uses: actions/upload-artifact@v4
-      with:
-        name: plugin-jar
-        path: build/libs/*all.jar
-        retention-days: 4
+      - name: Upload plugin JAR
+        uses: actions/upload-artifact@v4
+        with:
+          name: plugin-jar
+          path: build/libs/*all.jar
+          retention-days: 4
 
 
-    - name: Clean the Server Plugins Cache
-      run: ./gradlew cleanPaperPluginsCache
+      - name: Clean the Server Plugins Cache
+        run: ./gradlew cleanPaperPluginsCache
 
-#    - name: Run PaperMC Server (1.21.1)
-#      run: ./gradlew runServerTest -PmcVersion="1.21.1"
-#    - name: Run PaperMC Server (1.21.4)
-#      run: ./gradlew runServerTest -PmcVersion="1.21.4"
-#    - name: Check the Server Logs
-#      run: ./gradlew checkServerLogs
 
   dependency-submission:
 
@@ -62,13 +56,13 @@ jobs:
       contents: write
 
     steps:
-    - uses: actions/checkout@v4
-    - name: Set up JDK 21
-      uses: actions/setup-java@v4
-      with:
-        java-version: '21'
-        distribution: 'temurin'
-        cache: 'gradle'
+      - uses: actions/checkout@v4
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: 'gradle'
 
 
   test-paper:
@@ -84,17 +78,17 @@ jobs:
         uses: docker/setup-buildx-action@v3
       - name: Run PaperMC Server in Docker with plugin
         run: |
-            docker run -d \
-            --name test-paper-server \
-            -e EULA=TRUE \
-            -e TYPE=PAPER \
-            -e ONLINE_MODE=FALSE \
-            -e VERSION=1.21.1 \
-            -v ${{ github.workspace }}/plugins:/plugins \
-            -p 127.0.0.1:25565:25565 \
-            itzg/minecraft-server:latest
-            echo "Starting Paper server..."
-            sleep 1
+          docker run -d \
+          --name test-paper-server \
+          -e EULA=TRUE \
+          -e TYPE=PAPER \
+          -e ONLINE_MODE=FALSE \
+          -e VERSION=1.21.1 \
+          -v ${{ github.workspace }}/plugins:/plugins \
+          -p 127.0.0.1:25565:25565 \
+          itzg/minecraft-server:latest
+          echo "Starting Paper server..."
+          sleep 2
       - name: Delayed server health check
         run: |
           echo "Waiting for server to become healthy..."
@@ -153,7 +147,7 @@ jobs:
           -p 127.0.0.1:25565:25565 \
           itzg/minecraft-server:latest
           echo "Starting Purpur server..."
-          sleep 1
+          sleep 2
       - name: Delayed server health check
         run: |
           echo "Waiting for server to become healthy..."
