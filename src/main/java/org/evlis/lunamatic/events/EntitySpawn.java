@@ -30,7 +30,8 @@ public class EntitySpawn implements Listener {
     public void onEntitySpawn(EntitySpawnEvent event) {
         Entity entity = event.getEntity();
         World world = entity.getWorld();
-        if (GlobalVars.bloodMoonToday && GlobalVars.bloodMoonNow) {
+        String worldName = world.getName();
+        if (GlobalVars.currentMoonStateMap.get(worldName).isBloodMoonToday() && GlobalVars.currentMoonStateMap.get(worldName).isBloodMoonNow()) {
             Difficulty difficulty = world.getDifficulty();
             long time = world.getTime();
             if (entity instanceof Monster) { // Check if the entity is a hostile mob
@@ -57,7 +58,7 @@ public class EntitySpawn implements Listener {
                     monster.setTarget(nearestPlayer);
                 }
             }
-        } else if (GlobalVars.harvestMoonToday && GlobalVars.harvestMoonNow) {
+        } else if (GlobalVars.currentMoonStateMap.get(worldName).isHarvestMoonToday() && GlobalVars.currentMoonStateMap.get(worldName).isHarvestMoonNow()) {
             long time = world.getTime();
             int ticksTilDawn = 24000 - (int)time;
             // don't allow monster spawning during harvest moon

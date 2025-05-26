@@ -27,13 +27,14 @@ jobs:
       with:
         java-version: '21'
         distribution: 'temurin'
+        cache: 'gradle'
 
     # Configure Gradle for optimal use in GitHub Actions, including caching of downloaded dependencies.
     # See: https://github.com/gradle/actions/blob/main/setup-gradle/README.md
     - name: Setup Gradle
-      uses: gradle/actions/setup-gradle@af1da67850ed9a4cedd57bfd976089dd991e2582 # v4.0.0
+      uses: gradle/actions/setup-gradle@v4 # v4.0.0
 
-    - name: Build with Gradle Wrapper
+    - name: Execute Gradle build
       run: ./gradlew build
 
     - name: Upload plugin JAR
@@ -41,18 +42,18 @@ jobs:
       with:
         name: plugin-jar
         path: build/libs/*all.jar
+        retention-days: 4
+
 
     - name: Clean the Server Plugins Cache
       run: ./gradlew cleanPaperPluginsCache
 
-    - name: Run PaperMC Server (1.21.1)
-      run: ./gradlew runServerTest -PmcVersion="1.21.1"
-
-    - name: Run PaperMC Server (1.21.4)
-      run: ./gradlew runServerTest -PmcVersion="1.21.4"
-
-    - name: Check the Server Logs
-      run: ./gradlew checkServerLogs
+#    - name: Run PaperMC Server (1.21.1)
+#      run: ./gradlew runServerTest -PmcVersion="1.21.1"
+#    - name: Run PaperMC Server (1.21.4)
+#      run: ./gradlew runServerTest -PmcVersion="1.21.4"
+#    - name: Check the Server Logs
+#      run: ./gradlew checkServerLogs
 
   dependency-submission:
 
@@ -67,8 +68,123 @@ jobs:
       with:
         java-version: '21'
         distribution: 'temurin'
+        cache: 'gradle'
 
-    # Generates and submits a dependency graph, enabling Dependabot Alerts for all project dependencies.
-    # See: https://github.com/gradle/actions/blob/main/dependency-submission/README.md
-    - name: Generate and submit dependency graph
-      uses: gradle/actions/dependency-submission@af1da67850ed9a4cedd57bfd976089dd991e2582 # v4.0.0
+
+  test-paper:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download plugin JAR
+        uses: actions/download-artifact@v4
+        with:
+          name: plugin-jar
+          path: plugins
+      - name: Set up Docker
+        uses: docker/setup-buildx-action@v3
+      - name: Run PaperMC Server in Docker with plugin
+        run: |
+            docker run -d \
+            --name test-paper-server \
+            -e EULA=TRUE \
+            -e TYPE=PAPER \
+            -e ONLINE_MODE=FALSE \
+            -e VERSION=1.21.1 \
+            -v ${{ github.workspace }}/plugins:/plugins \
+            -p 127.0.0.1:25565:25565 \
+            itzg/minecraft-server:latest
+            echo "Starting Paper server..."
+            sleep 1
+      - name: Delayed server health check
+        run: |
+          echo "Waiting for server to become healthy..."
+          for i in {1..20}; do
+            healthy=$(docker exec test-paper-server mc-monitor status --host 127.0.0.1 || echo "unhealthy")
+            echo "Status: $healthy"
+            if [[ "$healthy" == *"online"* ]]; then
+              echo "Server is online!"
+              docker exec -i test-paper-server rcon-cli "luma cyclemoonstates"
+              exit 0
+            fi
+            sleep 6
+          done
+          echo "Server failed health check, timeout."
+          exit 1
+      - name: Stop the server
+        run: docker stop test-paper-server || true
+      - name: Retrieve server logs
+        run: docker logs test-paper-server
+      - name: Check Minecraft server logs for errors
+        run: |
+          echo "Checking container logs for errors..."
+          LOG_OUTPUT=$(docker logs test-paper-server 2>&1)
+          ERROR_LINES=$(echo "$LOG_OUTPUT" | grep 'ERROR]:' || true)
+          if [ -n "$ERROR_LINES" ]; then
+            echo "Errors were found in the server logs:"
+            echo "$ERROR_LINES"
+            exit 1
+          else
+            echo "No errors found in the container logs."
+          fi
+      - name: Stop and clean up
+        if: always()
+        run: docker rm -f test-paper-server || true
+
+
+  test-purpur:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download plugin JAR
+        uses: actions/download-artifact@v4
+        with:
+          name: plugin-jar
+          path: plugins
+      - name: Set up Docker
+        uses: docker/setup-buildx-action@v3
+      - name: Run PaperMC Server in Docker with plugin
+        run: |
+          docker run -d \
+          --name test-purpur-server \
+          -e EULA=TRUE \
+          -e TYPE=PURPUR \
+          -e VERSION=1.21.1 \
+          -v ${{ github.workspace }}/plugins:/plugins \
+          -p 127.0.0.1:25565:25565 \
+          itzg/minecraft-server:latest
+          echo "Starting Purpur server..."
+          sleep 1
+      - name: Delayed server health check
+        run: |
+          echo "Waiting for server to become healthy..."
+          for i in {1..20}; do
+            healthy=$(docker exec test-purpur-server mc-monitor status --host 127.0.0.1 || echo "unhealthy")
+            echo "Status: $healthy"
+            if [[ "$healthy" == *"online"* ]]; then
+              echo "Server is online!"
+              docker exec -i test-purpur-server rcon-cli "luma cyclemoonstates"
+              exit 0
+            fi
+            sleep 6
+          done
+          echo "Server failed health check, timeout."
+          exit 1
+      - name: Stop the server
+        run: docker stop test-purpur-server || true
+      - name: Retrieve server logs
+        run: docker logs test-purpur-server
+      - name: Check Minecraft server logs for errors
+        run: |
+          echo "Checking container logs for errors..."
+          LOG_OUTPUT=$(docker logs test-purpur-server 2>&1)
+          ERROR_LINES=$(echo "$LOG_OUTPUT" | grep 'ERROR]:' || true)
+          if [ -n "$ERROR_LINES" ]; then
+            echo "Errors were found in the server logs:"
+            echo "$ERROR_LINES"
+            exit 1
+          else
+            echo "No errors found in the container logs."
+          fi
+      - name: Stop and clean up
+        if: always()
+        run: docker rm -f test-purpur-server || true

@@ -44,3 +44,6 @@ wary_feel: "Du fühlst dich misstrauisch..."
 
 
 blood_moon_sleep: "Der Blutmond scheint! Du kannst nicht schlafen!"
+
+cmd_no_moon_world: "Lunamatic läuft in dieser Welt nicht!"
+world_load_success: "Erfolgreich geladene Welten: "

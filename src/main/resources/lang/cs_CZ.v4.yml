@@ -43,3 +43,6 @@ lucky_feel: "Cítíš se šťasně!"
 wary_feel: "Být tebou, byl bych více ostražitý..."
 
 blood_moon_sleep: "Jsi hodně rozrušený kvůli Krvavého měsíce. Možná by si měl raději strážit..."
+
+cmd_no_moon_world: "Lunamatic v tomto světě neběží!"
+world_load_success: "Úspěšně načtené světy: "

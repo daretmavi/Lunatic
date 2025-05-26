@@ -1,6 +1,6 @@
-# Default english translation, Use as template for translating!
+# Chinese (Simplified) translation by Hanmingxuan 韩明轩
 
-lang_load_success: "成功加载语言 zh-CN！"
+lang_load_success: "成功加载语言 zh_CN！"
 
 plugin_success_load: "成功启用 Lunamatic v"
 
@@ -43,3 +43,6 @@ lucky_feel: "你感到幸运！"
 wary_feel: "你感到警惕..."
 
 blood_moon_sleep: "血月照耀！你无法入睡！"
+
+cmd_no_moon_world: "Lunamatic 未在此世界中运行！"
+world_load_success: "成功加载的世界："

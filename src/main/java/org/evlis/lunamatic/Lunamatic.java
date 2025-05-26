@@ -5,6 +5,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import org.bukkit.Bukkit;
+import org.bukkit.World;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.evlis.lunamatic.commands.LumaCommand;
 import org.evlis.lunamatic.events.*;
@@ -19,6 +20,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import static org.evlis.lunamatic.GlobalVars.currentMoonStateMap;
 
 
 public final class Lunamatic extends JavaPlugin {
@@ -79,6 +82,11 @@ public final class Lunamatic extends JavaPlugin {
         }
         // Class Initialization
         Scheduler schedule = new Scheduler();
+        // defer moon state initialization until first server tick
+        getServer().getScheduler().runTask(this, () -> {
+            GlobalVars.initializeWorldSettings();
+            logger.info(langManager.getTranslation("world_load_success") + GlobalVars.currentMoonStateMap.keySet());
+        });
         timeSkip = new TimeSkip();
         playerJoin = new PlayerJoin();
         playerQuit = new PlayerQuit();

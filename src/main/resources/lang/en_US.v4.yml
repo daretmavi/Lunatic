@@ -43,3 +43,6 @@ lucky_feel: "You feel lucky!"
 wary_feel: "You feel wary..."
 
 blood_moon_sleep: "The blood moon shines! You cannot sleep!"
+
+cmd_no_moon_world: "Lunamatic is not running in this world!"
+world_load_success: "Successfully loaded world(s): "
