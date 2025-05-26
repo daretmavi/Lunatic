@@ -41,15 +41,19 @@ public class Scheduler {
 
     public void GetOmens(Plugin plugin) {
         GlobalRegionScheduler globalRegionScheduler = plugin.getServer().getGlobalRegionScheduler();
+        // get methods for Harvest moon
+        WorldEffects worldEffects = new WorldEffects();
         // generate new dice
         Random r = new Random();
-        // get methods for Harvest moon
-        WorldEffects totoroDance = new WorldEffects();
         // initialize logger
         Logger logger = plugin.getLogger();
+        // get translations
+        LangManager lang = getTranslationManager();
 
         globalRegionScheduler.runAtFixedRate(plugin, (t)-> {
             for (World world : Bukkit.getWorlds()) {
+                // Skip disabled worlds
+                if (GlobalVars.disabledWorlds.contains(world.getName())) continue;
                 // Check if the world has active players
                 List<Player> playerList = world.getPlayers();
                 if (playerList.isEmpty()) {
@@ -60,13 +64,15 @@ public class Scheduler {
                 }
 
                 long time = world.getTime();
+                String worldName = world.getName();
+                GlobalVars.CurrentMoonState state = GlobalVars.getMoonState(world);
                 // Check if it's the start of the day (0 ticks, 6am)
                 if (time >= 0 && time < 20) {
                     if (GlobalVars.debug) {
                         logger.info(getTranslationManager().getTranslation("sched_daydef_reset"));
                     }
                     // Reset defaults every dawn
-                    ResetFlags.resetAll();
+                    ResetFlags.resetAll(worldName);
                     ResetFlags.resetTickSpeed(world);
 
                     // get the moon phase tonight
@@ -76,39 +82,39 @@ public class Scheduler {
                         // Do a dice roll to check if we're getting a harvest moon?
                         int chance = r.nextInt(GlobalVars.harvestMoonDieSides);
                         if (chance == 0 && GlobalVars.harvestMoonEnabled) {
-                            GlobalVars.harvestMoonToday = true;
-                            PlayerMessage.Send(playerList, getTranslationManager().getTranslation("harvest_moon_tonight"), NamedTextColor.GOLD);
+                            GlobalVars.currentMoonStateMap.get(worldName).setHarvestMoonToday(true);
+                            PlayerMessage.Send(plugin, playerList, getTranslationManager().getTranslation("harvest_moon_tonight"), NamedTextColor.GOLD);
                         } else {
-                            PlayerMessage.Send(playerList, getTranslationManager().getTranslation("full_moon_tonight"), NamedTextColor.YELLOW);
+                            PlayerMessage.Send(plugin, playerList, getTranslationManager().getTranslation("full_moon_tonight"), NamedTextColor.YELLOW);
                         }
                     } else if (moonPhase == MoonPhase.NEW_MOON && GlobalVars.newMoonEnabled) {
                         // Do a dice roll to check if the players are THAT unlucky..
                         int chance = r.nextInt(GlobalVars.bloodMoonDieSides);
                         if (chance == 0 && GlobalVars.bloodMoonEnabled) {
-                            GlobalVars.bloodMoonToday = true;
-                            PlayerMessage.Send(playerList, getTranslationManager().getTranslation("blood_moon_tonight"), NamedTextColor.DARK_RED);
+                            GlobalVars.currentMoonStateMap.get(worldName).setBloodMoonToday(true);
+                            PlayerMessage.Send(plugin, playerList, getTranslationManager().getTranslation("blood_moon_tonight"), NamedTextColor.DARK_RED);
                         } else {
-                            PlayerMessage.Send(playerList, getTranslationManager().getTranslation("new_moon_tonight"), NamedTextColor.DARK_GRAY);
+                            PlayerMessage.Send(plugin, playerList, getTranslationManager().getTranslation("new_moon_tonight"), NamedTextColor.DARK_GRAY);
                         }
                     }
                 }
                 // Execute immediately after sunset starts
                 if (time >= 12010 && time < 12030) {
-                    if (GlobalVars.harvestMoonToday || GlobalVars.harvestMoonNow) {
-                        if (GlobalVars.harvestMoonToday && !GlobalVars.harvestMoonNow) {
-                            GlobalVars.harvestMoonNow = true;
+                    if (GlobalVars.currentMoonStateMap.get(worldName).isHarvestMoonToday() || GlobalVars.currentMoonStateMap.get(worldName).isHarvestMoonNow()) {
+                        if (GlobalVars.currentMoonStateMap.get(worldName).isHarvestMoonToday() && !GlobalVars.currentMoonStateMap.get(worldName).isHarvestMoonNow()) {
+                            GlobalVars.currentMoonStateMap.get(worldName).setHarvestMoonNow(true);
                             // Ensure global var reset
                             plugin.getServer().getScheduler().runTaskLater(plugin, () -> {
                                 ResetFlags.resetTickSpeed(world);
                             }, 24000 - (int)time);
-                            plugin.getServer().getScheduler().runTaskLater(plugin, ResetFlags::resetAll, 24000 - (int)time);
-                            totoroDance.setRandomTickSpeed(world, 30);
-                            totoroDance.setClearSkies(world, (24000 - (int)time));
-                            PlayerMessage.Send(playerList, getTranslationManager().getTranslation("grass_growing"), NamedTextColor.GOLD);
+                            plugin.getServer().getScheduler().runTaskLater(plugin, () -> ResetFlags.resetAll(world.getName()), 24000 - (int)time);
+                            worldEffects.setRandomTickSpeed(world, 30);
+                            worldEffects.setClearSkies(world, (24000 - (int)time));
+                            PlayerMessage.Send(plugin, playerList, getTranslationManager().getTranslation("grass_growing"), NamedTextColor.GOLD);
                         } else { // if for some reason both flags are still true, we have an invalid state
                             logger.warning(getTranslationManager().getTranslation("sched_invalid_harv"));
-                            GlobalVars.harvestMoonToday = false;
-                            GlobalVars.harvestMoonNow = false;
+                            GlobalVars.currentMoonStateMap.get(worldName).setHarvestMoonToday(false);
+                            GlobalVars.currentMoonStateMap.get(worldName).setHarvestMoonNow(false);
                         }
                     }
                 }
@@ -118,15 +124,15 @@ public class Scheduler {
                     for (Player p : playerList) {
                         NightEffects.ApplyMoonlight(plugin, p, moonPhase, (24000 - (int)time));
                     }
-                    if (GlobalVars.bloodMoonToday || GlobalVars.bloodMoonNow) {
-                        if (GlobalVars.bloodMoonToday && !GlobalVars.bloodMoonNow) {
-                            GlobalVars.bloodMoonNow = true;
+                    if (GlobalVars.currentMoonStateMap.get(worldName).isBloodMoonToday() || GlobalVars.currentMoonStateMap.get(worldName).isBloodMoonNow()) {
+                        if (GlobalVars.currentMoonStateMap.get(worldName).isBloodMoonToday() && !GlobalVars.currentMoonStateMap.get(worldName).isBloodMoonNow()) {
+                            GlobalVars.currentMoonStateMap.get(worldName).setBloodMoonNow(true);
                             // Ensure global var reset
-                            plugin.getServer().getScheduler().runTaskLater(plugin, ResetFlags::resetAll, 24000 - (int)time);
+                            plugin.getServer().getScheduler().runTaskLater(plugin, () -> ResetFlags.resetAll(world.getName()), 24000 - (int)time);
                         } else { // if for some reason both flags are still true, we have an invalid state
                             logger.warning(getTranslationManager().getTranslation("sched_invalid_blood"));
-                            GlobalVars.bloodMoonToday = false;
-                            GlobalVars.bloodMoonNow = false;
+                            GlobalVars.currentMoonStateMap.get(worldName).setBloodMoonToday(false);
+                            GlobalVars.currentMoonStateMap.get(worldName).setBloodMoonNow(false);
                         }
                     }
                 }

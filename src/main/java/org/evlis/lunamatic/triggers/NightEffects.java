@@ -17,12 +17,12 @@ public class NightEffects {
             Bukkit.getRegionScheduler().execute(plugin, player.getLocation(), () -> {
                 player.addPotionEffect(new PotionEffect(PotionEffectType.LUCK, timeTilDawn, 0));
             });
-            PlayerMessage.Send(player, langManager.getTranslation("lucky_feel"), NamedTextColor.DARK_GREEN);
+            PlayerMessage.Send(plugin, player, langManager.getTranslation("lucky_feel"), NamedTextColor.DARK_GREEN);
         } else if (moonPhase == MoonPhase.NEW_MOON) {
             Bukkit.getRegionScheduler().execute(plugin, player.getLocation(), () -> {
                 player.addPotionEffect(new PotionEffect(PotionEffectType.UNLUCK, timeTilDawn, 0));
             });
-            PlayerMessage.Send(player, langManager.getTranslation("wary_feel"), NamedTextColor.DARK_PURPLE);
+            PlayerMessage.Send(plugin, player, langManager.getTranslation("wary_feel"), NamedTextColor.DARK_PURPLE);
         }
 
     }

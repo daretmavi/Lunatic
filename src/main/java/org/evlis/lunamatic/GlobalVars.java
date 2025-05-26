@@ -4,6 +4,7 @@ import io.papermc.paper.world.MoonPhase;
 import org.bukkit.Bukkit;
 import org.bukkit.Difficulty;
 import org.bukkit.World;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.Map;
@@ -20,6 +21,10 @@ public class GlobalVars {
                 currentMoonStateMap.put(world.getName(), new CurrentMoonState());
             }
         }
+    }
+    // Null safe moon state getter
+    public static CurrentMoonState getMoonState(@NotNull World world) {
+        return currentMoonStateMap.getOrDefault(world.getName(), new CurrentMoonState());
     }
     // Test flag
     public static Boolean debug = false;

@@ -25,10 +25,11 @@ public class EntitySpawnTests {
         System.out.println("CreeperSpawn test setup started");
         server = MockBukkit.mock();
         world = new WorldMock();
+        String worldName = world.getName();
         server.addWorld(world);
         entitySpawn = new EntitySpawn();
-        GlobalVars.bloodMoonToday = true;
-        GlobalVars.bloodMoonNow = true;
+        GlobalVars.currentMoonStateMap.get(worldName).setBloodMoonToday(true);
+        GlobalVars.currentMoonStateMap.get(worldName).setBloodMoonNow(true);
         world.setDifficulty(Difficulty.NORMAL);
         world.setTime(18200L);
     }
@@ -36,8 +37,6 @@ public class EntitySpawnTests {
     @AfterEach
     void tearDown() {
         MockBukkit.unmock();
-        GlobalVars.bloodMoonToday = false;
-        GlobalVars.bloodMoonNow = false;
     }
 
     @Test

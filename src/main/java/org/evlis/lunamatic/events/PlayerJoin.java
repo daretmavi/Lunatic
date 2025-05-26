@@ -37,18 +37,18 @@ public class PlayerJoin implements Listener {
             // currently cannot be separated without a code rewrite.
             if (moonPhase == MoonPhase.FULL_MOON) {
                 if (GlobalVars.currentMoonStateMap.get(worldName).isHarvestMoonToday()) {
-                    PlayerMessage.Send(player, langManager.getTranslation("harvest_moon_tonight"), NamedTextColor.GOLD);
+                    PlayerMessage.Send(plugin, player, langManager.getTranslation("harvest_moon_tonight"), NamedTextColor.GOLD);
                 } else {
-                    PlayerMessage.Send(player, langManager.getTranslation("full_moon_tonight"), NamedTextColor.YELLOW);
+                    PlayerMessage.Send(plugin, player, langManager.getTranslation("full_moon_tonight"), NamedTextColor.YELLOW);
                 }
                 if (time >= 12610) {
                     NightEffects.ApplyMoonlight(plugin, player, MoonPhase.FULL_MOON, (24000 - (int)time));
                 }
             } else if (moonPhase == MoonPhase.NEW_MOON) {
                 if (GlobalVars.currentMoonStateMap.get(worldName).isBloodMoonToday()) {
-                    PlayerMessage.Send(player, langManager.getTranslation("blood_moon_tonight"), NamedTextColor.DARK_RED);
+                    PlayerMessage.Send(plugin, player, langManager.getTranslation("blood_moon_tonight"), NamedTextColor.DARK_RED);
                 } else {
-                    PlayerMessage.Send(player, langManager.getTranslation("new_moon_tonight"), NamedTextColor.DARK_GRAY);
+                    PlayerMessage.Send(plugin, player, langManager.getTranslation("new_moon_tonight"), NamedTextColor.DARK_GRAY);
                 }
                 if (time >= 12610) {
                     NightEffects.ApplyMoonlight(plugin, player, MoonPhase.NEW_MOON, (24000 - (int)time));

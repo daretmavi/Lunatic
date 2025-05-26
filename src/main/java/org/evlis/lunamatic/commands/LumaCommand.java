@@ -62,7 +62,7 @@ public class LumaCommand extends BaseCommand {
             logger.info(getLangManager().getTranslation("lang_load_success"));
             sender.sendMessage(getLangManager().getTranslation("cmd_reload_success"));
             if (sender instanceof Player) {
-                PlayerMessage.Send((Player) sender,getLangManager().getTranslation("cmd_reload_warn"), NamedTextColor.YELLOW);
+                PlayerMessage.Send(plugin, (Player) sender,getLangManager().getTranslation("cmd_reload_warn"), NamedTextColor.YELLOW);
             } else {
                 logger.warning(GlobalVars.lang + getLangManager().getTranslation("cmd_reload_warn"));
             }

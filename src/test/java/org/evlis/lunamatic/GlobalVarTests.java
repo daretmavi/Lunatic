@@ -1,6 +1,7 @@
 package org.evlis.lunamatic;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import org.bukkit.Difficulty;
 import org.evlis.lunamatic.events.EntitySpawn;
@@ -11,6 +12,8 @@ import org.junit.jupiter.api.Test;
 import org.mockbukkit.mockbukkit.MockBukkit;
 import org.mockbukkit.mockbukkit.ServerMock;
 import org.mockbukkit.mockbukkit.world.WorldMock;
+
+import java.util.Map;
 
 public class GlobalVarTests {
 
@@ -35,10 +38,13 @@ public class GlobalVarTests {
     @DisplayName("Verify that all global temporal flags initialize to FALSE:")
     public void allFlagsStartAsFalse() {
         assertEquals(false, GlobalVars.debug);
-        assertEquals(false, GlobalVars.bloodMoonToday);
-        assertEquals(false, GlobalVars.harvestMoonToday);
-        assertEquals(false, GlobalVars.bloodMoonNow);
-        assertEquals(false, GlobalVars.harvestMoonNow);
+        for (Map.Entry<String, GlobalVars.CurrentMoonState> entry : GlobalVars.currentMoonStateMap.entrySet()) {
+            String worldName = entry.getKey();
+            GlobalVars.CurrentMoonState state = entry.getValue();
+            assertFalse(state.isBloodMoonToday());
+            assertFalse(state.isHarvestMoonToday());
+            assertFalse(state.isBloodMoonNow());
+            assertFalse(state.isHarvestMoonNow());
+        }
     }
-
 }
