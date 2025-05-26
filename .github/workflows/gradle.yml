@@ -36,6 +36,12 @@ jobs:
     - name: Build with Gradle Wrapper
       run: ./gradlew build
 
+    - name: Upload plugin JAR
+      uses: actions/upload-artifact@v4
+      with:
+        name: plugin-jar
+        path: build/libs/*all.jar
+
     - name: Clean the Server Plugins Cache
       run: ./gradlew cleanPaperPluginsCache
 
