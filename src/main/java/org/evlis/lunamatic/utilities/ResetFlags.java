@@ -5,7 +5,7 @@ import org.evlis.lunamatic.GlobalVars;
 
 public class ResetFlags {
 
-    static TotoroDance totoroDance = new TotoroDance();
+    static WorldEffects totoroDance = new WorldEffects();
 
     public static void resetAll() {
         GlobalVars.harvestMoonToday = false;

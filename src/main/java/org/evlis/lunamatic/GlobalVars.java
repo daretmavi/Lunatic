@@ -15,26 +15,8 @@ public class GlobalVars {
     public static Integer lang_vers = 3;
     // Check for updates?
     public static Boolean checkUpdates = true;
-    //
+    // Default language for the plugin
     public static String lang = "en_US";
-    // enabled moons:
-    public static Boolean fullMoonEnabled = true;
-    public static Boolean harvestMoonEnabled = true;
-    public static Boolean harvestMoonSpawnAllay = true;
-    public static Boolean newMoonEnabled = true;
-    public static Boolean bloodMoonEnabled = true;
-    public static Boolean bloodMoonSpawnVex = true;
-    // Dice sides for blood & harvest
-    public static Integer bloodMoonDieSides = 2;
-    public static Integer harvestMoonDieSides = 2;
-    // is there a blood moon today?
-    public static Boolean bloodMoonToday = false;
-    // is there a harvest moon today?
-    public static Boolean harvestMoonToday = false;
-    // is there a blood moon RIGHT NOW?
-    public static Boolean bloodMoonNow = false;
-    // is there a harvest moon RIGHT NOW?
-    public static Boolean harvestMoonNow = false;
     // how far should monsters engage the player from during a blood moon?
     public static final double bloodmoonDetectionRange = 32.0;
     // worlds to exclude entirely from moon effects
@@ -75,4 +57,24 @@ public class GlobalVars {
             MoonPhase.FIRST_QUARTER, 48000,
             MoonPhase.WAXING_GIBBOUS, 24000
     );
+    //============ PER-WORLD SETTINGS ============//
+    // enabled moons:
+    public static Boolean fullMoonEnabled = true;
+    public static Boolean harvestMoonEnabled = true;
+    public static Boolean harvestMoonSpawnAllay = true;
+    public static Boolean newMoonEnabled = true;
+    public static Boolean bloodMoonEnabled = true;
+    public static Boolean bloodMoonSpawnVex = true;
+    // Dice sides for blood & harvest
+    public static Integer bloodMoonDieSides = 2;
+    public static Integer harvestMoonDieSides = 2;
+    // is there a blood moon today?
+    public static Boolean bloodMoonToday = false;
+    // is there a harvest moon today?
+    public static Boolean harvestMoonToday = false;
+    // is there a blood moon RIGHT NOW?
+    public static Boolean bloodMoonNow = false;
+    // is there a harvest moon RIGHT NOW?
+    public static Boolean harvestMoonNow = false;
+    //============================================//
 }

@@ -4,15 +4,15 @@ import io.papermc.paper.world.MoonPhase;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
 import io.papermc.paper.threadedregions.scheduler.GlobalRegionScheduler;
-import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.evlis.lunamatic.GlobalVars;
 import org.evlis.lunamatic.utilities.PlayerMessage;
 import org.evlis.lunamatic.utilities.ResetFlags;
-import org.evlis.lunamatic.utilities.TotoroDance;
+import org.evlis.lunamatic.utilities.WorldEffects;
 import org.evlis.lunamatic.utilities.LangManager;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -24,12 +24,27 @@ public class Scheduler {
         return LangManager.getInstance(); // Always fetch the latest instance
     }
 
+    @ApiStatus.Experimental
+    public static void runGlobalDelayed(Plugin plugin, Runnable task, long delay) {
+        plugin.getServer().getGlobalRegionScheduler().runDelayed(plugin, t -> task.run(), delay);
+    }
+
+    @ApiStatus.Experimental
+    private void runWorldDelayed(Plugin plugin, World world, Runnable task, long delay) {
+        plugin.getServer().getRegionScheduler().runDelayed(
+                plugin,
+                world.getSpawnLocation(),
+                t -> task.run(),
+                delay
+        );
+    }
+
     public void GetOmens(Plugin plugin) {
         GlobalRegionScheduler globalRegionScheduler = plugin.getServer().getGlobalRegionScheduler();
         // generate new dice
         Random r = new Random();
         // get methods for Harvest moon
-        TotoroDance totoroDance = new TotoroDance();
+        WorldEffects totoroDance = new WorldEffects();
         // initialize logger
         Logger logger = plugin.getLogger();
 
