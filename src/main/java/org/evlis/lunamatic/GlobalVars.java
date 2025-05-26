@@ -29,7 +29,7 @@ public class GlobalVars {
     // Test flag
     public static Boolean debug = false;
     // Language version increment
-    public static Integer lang_vers = 3;
+    public static Integer lang_vers = 4;
     // Check for updates?
     public static Boolean checkUpdates = true;
     // Default language for the plugin

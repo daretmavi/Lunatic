@@ -64,7 +64,7 @@ public class LangManager {
 
 
     public void saveDefaultTranslations() {
-        // Pattern for filenames: en_US.v3.yml
+        // Pattern for filenames: en_US.v4.yml
         Pattern versionPattern = Pattern.compile(".*\\.v(\\d+)\\.yml$");
 
         try {

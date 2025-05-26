@@ -21,6 +21,8 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import static org.evlis.lunamatic.GlobalVars.currentMoonStateMap;
+
 
 public final class Lunamatic extends JavaPlugin {
     private static Lunamatic instance;
@@ -79,8 +81,12 @@ public final class Lunamatic extends JavaPlugin {
             checkForUpdates(currentVersion);
         }
         // Class Initialization
-        GlobalVars.initializeWorldSettings();
         Scheduler schedule = new Scheduler();
+        // defer moon state initialization until first server tick
+        getServer().getScheduler().runTask(this, () -> {
+            GlobalVars.initializeWorldSettings();
+            logger.info(langManager.getTranslation("world_load_success") + GlobalVars.currentMoonStateMap.keySet());
+        });
         timeSkip = new TimeSkip();
         playerJoin = new PlayerJoin();
         playerQuit = new PlayerQuit();
