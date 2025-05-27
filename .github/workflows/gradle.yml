@@ -14,7 +14,7 @@ on:
     branches: [ "main" ]
 
 env:
-  MC_VERSION: 1.21.5
+  MC_VERSION: 1.21.4
 
 jobs:
   build:
