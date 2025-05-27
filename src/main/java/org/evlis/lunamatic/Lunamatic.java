@@ -83,7 +83,7 @@ public final class Lunamatic extends JavaPlugin {
         // Class Initialization
         Scheduler schedule = new Scheduler();
         // defer moon state initialization until first server tick
-        getServer().getScheduler().runTask(this, () -> {
+        getServer().getGlobalRegionScheduler().run(this, (server) -> {
             GlobalVars.initializeWorldSettings();
             logger.info(langManager.getTranslation("world_load_success") + GlobalVars.currentMoonStateMap.keySet());
         });
