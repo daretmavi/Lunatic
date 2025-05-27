@@ -14,7 +14,7 @@ on:
     branches: [ "main" ]
 
 env:
-  MC_VERSION: 1.21.1
+  MC_VERSION: 1.21.5
 
 jobs:
   build:
@@ -104,6 +104,7 @@ jobs:
             sleep 6
           done
           echo "Server failed health check, timeout."
+          docker logs test-paper-server
           exit 1
       - name: Stop the server
         run: docker stop test-paper-server || true
@@ -165,6 +166,7 @@ jobs:
             sleep 6
           done
           echo "Server failed health check, timeout."
+          docker logs test-purpur-server
           exit 1
       - name: Stop the server
         run: docker stop test-purpur-server || true
@@ -226,6 +228,7 @@ jobs:
             sleep 6
           done
           echo "Server failed health check, timeout."
+          docker logs test-folia-server
           exit 1
       - name: Stop the server
         run: docker stop test-folia-server || true
