@@ -1,0 +1,66 @@
+name: Generate Job Status Badges
+
+on:
+  workflow_run:
+    workflows: ["Overall Status"]
+    types:
+      - completed
+
+jobs:
+  generate-badges:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Get workflow run ID
+        run: echo "RUN_ID=${{ github.event.workflow_run.id }}" >> $GITHUB_ENV
+
+      - name: Fetch job statuses from GitHub API
+        id: fetch_jobs
+        run: |
+          echo "Fetching job statuses for run $RUN_ID"
+          jobs_json=$(curl -s -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/${{ github.repository }}/actions/runs/$RUN_ID/jobs")
+
+          echo "$jobs_json" > jobs.json
+          echo "Jobs JSON saved."
+
+      - name: Generate badge JSON files
+        run: |
+          mkdir -p badges
+          jq -c '.jobs[] | {name: .name, conclusion: .conclusion}' jobs.json > jobs_simple.json
+
+          # Generate JSON files per job
+          cat jobs_simple.json | while read job; do
+            name=$(echo $job | jq -r '.name' | tr ' ' '_')
+            conclusion=$(echo $job | jq -r '.conclusion')
+
+            # Map conclusion to color and message
+            case $conclusion in
+              success) color="green"; message="passing";;
+              failure) color="red"; message="failed";;
+              cancelled) color="lightgrey"; message="cancelled";;
+              skipped) color="yellow"; message="skipped";;
+              timed_out) color="orange"; message="timed out";;
+              *) color="blue"; message=$conclusion;;
+            esac
+
+            cat > badges/${name}.json <<EOF
+          {
+            "schemaVersion": 1,
+            "label": "${name}",
+            "message": "${message}",
+            "color": "${color}"
+          }
+          EOF
+          done
+
+      - name: Commit and push badge files
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add badges/*.json
+          git commit -m "Update job status badges [skip ci]" || echo "No changes to commit"
+          git push

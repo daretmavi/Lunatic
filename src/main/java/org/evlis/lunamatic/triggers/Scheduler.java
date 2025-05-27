@@ -39,7 +39,7 @@ public class Scheduler {
         );
     }
 
-    public void GetOmens(Plugin plugin) {
+    public void StartMoonSchedule(Plugin plugin) {
         GlobalRegionScheduler globalRegionScheduler = plugin.getServer().getGlobalRegionScheduler();
         // get methods for Harvest moon
         WorldEffects worldEffects = new WorldEffects();

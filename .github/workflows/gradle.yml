@@ -5,7 +5,7 @@
 # This workflow will build a Java project with Gradle and cache/restore any dependencies to improve the workflow execution time
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-gradle
 
-name: Gradle Build and Paper/Purpur/Folia Tests
+name: Overall Status
 
 on:
   push:
@@ -83,6 +83,7 @@ jobs:
           -e TYPE=PAPER \
           -e ONLINE_MODE=FALSE \
           -e VERSION=${MC_VERSION} \
+          -e JVM_DD_OPTS=disable.watchdog:true \
           -v ${{ github.workspace }}/plugins:/plugins \
           -p 127.0.0.1:25565:25565 \
           itzg/minecraft-server:latest
@@ -142,6 +143,7 @@ jobs:
           -e EULA=TRUE \
           -e TYPE=PURPUR \
           -e VERSION=${MC_VERSION} \
+          -e JVM_DD_OPTS=disable.watchdog:true \
           -v ${{ github.workspace }}/plugins:/plugins \
           -p 127.0.0.1:25565:25565 \
           itzg/minecraft-server:latest
@@ -201,6 +203,7 @@ jobs:
           -e EULA=TRUE \
           -e TYPE=FOLIA \
           -e VERSION=${MC_VERSION} \
+          -e JVM_DD_OPTS=disable.watchdog:true \
           -v ${{ github.workspace }}/plugins:/plugins \
           -p 127.0.0.1:25565:25565 \
           itzg/minecraft-server:latest
