@@ -14,7 +14,7 @@ on:
     branches: [ "main" ]
 
 env:
-  MC_VERSION: 1.21.4
+  MC_VERSION: 1.21.1
 
 jobs:
   build:
@@ -83,6 +83,7 @@ jobs:
           -e TYPE=PAPER \
           -e ONLINE_MODE=FALSE \
           -e VERSION=${MC_VERSION} \
+          -e MAX_TICK_TIME=-1 \
           -e JVM_DD_OPTS=disable.watchdog:true \
           -v ${{ github.workspace }}/plugins:/plugins \
           -p 127.0.0.1:25565:25565 \
@@ -143,6 +144,7 @@ jobs:
           -e EULA=TRUE \
           -e TYPE=PURPUR \
           -e VERSION=${MC_VERSION} \
+          -e MAX_TICK_TIME=-1 \
           -e JVM_DD_OPTS=disable.watchdog:true \
           -v ${{ github.workspace }}/plugins:/plugins \
           -p 127.0.0.1:25565:25565 \
@@ -203,6 +205,7 @@ jobs:
           -e EULA=TRUE \
           -e TYPE=FOLIA \
           -e VERSION=${MC_VERSION} \
+          -e MAX_TICK_TIME=-1 \
           -e JVM_DD_OPTS=disable.watchdog:true \
           -v ${{ github.workspace }}/plugins:/plugins \
           -p 127.0.0.1:25565:25565 \
