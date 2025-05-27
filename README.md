@@ -1,4 +1,8 @@
-# ![JUnit Tests](https://github.com/Ifiht/Lunatic/actions/workflows/gradle.yml/badge.svg)
+![Workflow](https://github.com/Ifiht/Lunatic/actions/workflows/gradle.yml/badge.svg)
+![BUILD Endpoint Badge](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FIfiht%2FLunatic%2Frefs%2Fheads%2Fmain%2Fbadges%2Fbuild.json)
+![PAPER Endpoint Badge](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FIfiht%2FLunatic%2Frefs%2Fheads%2Fmain%2Fbadges%2Ftest-paper.json)
+![PURPUR Endpoint Badge](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FIfiht%2FLunatic%2Frefs%2Fheads%2Fmain%2Fbadges%2Ftest-purpur.json)
+![FOLIA Endpoint Badge](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FIfiht%2FLunatic%2Frefs%2Fheads%2Fmain%2Fbadges%2Ftest-folia.json)
 
 # Lunatic - a Moon plugin for Paper/Folia**
 The Moon shines bright on this world :rice_scene:  
