@@ -52,19 +52,20 @@ public class Scheduler {
 
         globalRegionScheduler.runAtFixedRate(plugin, (t)-> {
             for (World world : Bukkit.getWorlds()) {
-                // Skip disabled worlds
-                if (GlobalVars.disabledWorlds.contains(world.getName())) continue;
+                String worldName = world.getName();
+                // Skip disabled worlds, or worlds that initialization missed
+                if (GlobalVars.disabledWorlds.contains(worldName)) {
+                    continue;
+                } else if (!GlobalVars.currentMoonStateMap.containsKey(worldName)) {
+                    logger.warning("Scheduling tasks for world '" + worldName + "' failed! World not initialized.");
+                    continue;
+                }
                 // Check if the world has active players
                 List<Player> playerList = world.getPlayers();
                 if (playerList.isEmpty()) {
                     continue; // Skip worlds with no active players
                 }
-                if (GlobalVars.disabledWorlds.contains(world.getName())) {
-                    continue; // Skip worlds on the disabled list
-                }
-
                 long time = world.getTime();
-                String worldName = world.getName();
                 GlobalVars.CurrentMoonState state = GlobalVars.getMoonState(world);
                 // Check if it's the start of the day (0 ticks, 6am)
                 if (time >= 0 && time < 20) {

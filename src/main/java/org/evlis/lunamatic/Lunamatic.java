@@ -79,11 +79,7 @@ public final class Lunamatic extends JavaPlugin {
         }
         // Class Initialization
         Scheduler schedule = new Scheduler();
-        // defer moon state initialization until first server tick
-        getServer().getGlobalRegionScheduler().run(this, (server) -> {
-            GlobalVars.initializeWorldSettings();
-            logger.info(langManager.getTranslation("world_load_success") + GlobalVars.currentMoonStateMap.keySet());
-        });
+
         timeSkip = new TimeSkip();
         playerJoin = new PlayerJoin();
         playerQuit = new PlayerQuit();
@@ -94,8 +90,13 @@ public final class Lunamatic extends JavaPlugin {
         Bukkit.getServer().getPluginManager().registerEvents(playerQuit, this);
         Bukkit.getServer().getPluginManager().registerEvents(playerSleep, this);
         Bukkit.getServer().getPluginManager().registerEvents(entitySpawn, this);
-        registerCommands();
-
+        // defer moon state initialization until first server tick
+        getServer().getGlobalRegionScheduler().runDelayed(this, (server) -> {
+            GlobalVars.initializeWorldSettings();
+            logger.info(langManager.getTranslation("world_load_success") + GlobalVars.currentMoonStateMap.keySet());
+            // register commands here to avoid race conditions
+            this.registerCommands();
+        }, 1L);
         schedule.StartMoonSchedule(this);
         // Notify of successful plugin start
         logger.info(langManager.getTranslation("plugin_success_load") + currentVersion);
