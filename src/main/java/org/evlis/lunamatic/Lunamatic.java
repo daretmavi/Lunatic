@@ -85,17 +85,18 @@ public final class Lunamatic extends JavaPlugin {
         playerQuit = new PlayerQuit();
         playerSleep = new PlayerSleep();
         entitySpawn = new EntitySpawn();
-        Bukkit.getServer().getPluginManager().registerEvents(timeSkip, this);
-        Bukkit.getServer().getPluginManager().registerEvents(playerJoin, this);
-        Bukkit.getServer().getPluginManager().registerEvents(playerQuit, this);
-        Bukkit.getServer().getPluginManager().registerEvents(playerSleep, this);
-        Bukkit.getServer().getPluginManager().registerEvents(entitySpawn, this);
         // defer moon state initialization until first server tick
         getServer().getGlobalRegionScheduler().runDelayed(this, (server) -> {
             GlobalVars.initializeWorldSettings();
             logger.info(langManager.getTranslation("world_load_success") + GlobalVars.currentMoonStateMap.keySet());
             // register commands here to avoid race conditions
             this.registerCommands();
+            // delay event registration to after world gen is complete
+            Bukkit.getServer().getPluginManager().registerEvents(timeSkip, this);
+            Bukkit.getServer().getPluginManager().registerEvents(playerJoin, this);
+            Bukkit.getServer().getPluginManager().registerEvents(playerQuit, this);
+            Bukkit.getServer().getPluginManager().registerEvents(playerSleep, this);
+            Bukkit.getServer().getPluginManager().registerEvents(entitySpawn, this);
         }, 1L);
         schedule.StartMoonSchedule(this);
         // Notify of successful plugin start
