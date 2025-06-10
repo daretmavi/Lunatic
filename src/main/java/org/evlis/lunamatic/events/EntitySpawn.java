@@ -11,6 +11,7 @@ import org.bukkit.potion.PotionEffectType;
 import org.evlis.lunamatic.GlobalVars;
 import org.evlis.lunamatic.Lunamatic;
 import org.evlis.lunamatic.utilities.NightSummons;
+import org.evlis.lunamatic.utilities.WorldUtils;
 
 import java.util.List;
 import java.util.logging.Logger;
@@ -33,13 +34,10 @@ public class EntitySpawn implements Listener {
         Entity entity = event.getEntity();
         World world = entity.getWorld();
         String worldName = world.getName();
-        // Skip disabled worlds, or worlds that initialization missed
-        if (GlobalVars.disabledWorlds.contains(worldName)) {
+        //++++++++ ADD NULL WORLD CHECK!!! ++++++++//
+        if (!WorldUtils.isWorldEnabled(worldName)) {
             return;
-        } else if (!GlobalVars.currentMoonStateMap.containsKey(worldName)) {
-            logger.warning("Spawn event for world '" + worldName + "' failed! World not initialized.");
-            return;
-        }
+        } // END NULL WORLD CHECK..................
         if (GlobalVars.currentMoonStateMap.get(worldName).isBloodMoonToday() && GlobalVars.currentMoonStateMap.get(worldName).isBloodMoonNow()) {
             Difficulty difficulty = world.getDifficulty();
             long time = world.getTime();

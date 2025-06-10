@@ -10,7 +10,7 @@ import org.bukkit.plugin.Plugin;
 import org.evlis.lunamatic.GlobalVars;
 import org.evlis.lunamatic.utilities.PlayerMessage;
 import org.evlis.lunamatic.utilities.ResetFlags;
-import org.evlis.lunamatic.utilities.WorldEffects;
+import org.evlis.lunamatic.utilities.WorldUtils;
 import org.evlis.lunamatic.utilities.LangManager;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
@@ -42,7 +42,7 @@ public class Scheduler {
     public void StartMoonSchedule(Plugin plugin) {
         GlobalRegionScheduler globalRegionScheduler = plugin.getServer().getGlobalRegionScheduler();
         // get methods for Harvest moon
-        WorldEffects worldEffects = new WorldEffects();
+        WorldUtils worldUtils = new WorldUtils();
         // generate new dice
         Random r = new Random();
         // initialize logger
@@ -53,13 +53,10 @@ public class Scheduler {
         globalRegionScheduler.runAtFixedRate(plugin, (t)-> {
             for (World world : Bukkit.getWorlds()) {
                 String worldName = world.getName();
-                // Skip disabled worlds, or worlds that initialization missed
-                if (GlobalVars.disabledWorlds.contains(worldName)) {
-                    continue;
-                } else if (!GlobalVars.currentMoonStateMap.containsKey(worldName)) {
-                    logger.warning("Scheduling tasks for world '" + worldName + "' failed! World not initialized.");
-                    continue;
-                }
+                //++++++++ ADD NULL WORLD CHECK!!! ++++++++//
+                if (!WorldUtils.isWorldEnabled(worldName)) {
+                    return;
+                } // END NULL WORLD CHECK..................
                 // Check if the world has active players
                 List<Player> playerList = world.getPlayers();
                 if (playerList.isEmpty()) {
@@ -108,8 +105,8 @@ public class Scheduler {
                                 ResetFlags.resetTickSpeed(world);
                             }, 24000 - (int)time);
                             plugin.getServer().getScheduler().runTaskLater(plugin, () -> ResetFlags.resetAll(world.getName()), 24000 - (int)time);
-                            worldEffects.setRandomTickSpeed(world, 30);
-                            worldEffects.setClearSkies(world, (24000 - (int)time));
+                            worldUtils.setRandomTickSpeed(world, 30);
+                            worldUtils.setClearSkies(world, (24000 - (int)time));
                             PlayerMessage.Send(plugin, playerList, getTranslationManager().getTranslation("grass_growing"), NamedTextColor.GOLD);
                         } else { // if for some reason both flags are still true, we have an invalid state
                             logger.warning(getTranslationManager().getTranslation("sched_invalid_harv"));

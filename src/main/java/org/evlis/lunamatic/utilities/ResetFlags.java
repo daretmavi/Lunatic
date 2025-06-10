@@ -5,7 +5,7 @@ import org.evlis.lunamatic.GlobalVars;
 
 public class ResetFlags {
 
-    static WorldEffects worldEffects = new WorldEffects();
+    static WorldUtils worldUtils = new WorldUtils();
 
     public static void resetAll(String worldName) {
         GlobalVars.currentMoonStateMap.get(worldName).setHarvestMoonToday(false);
@@ -15,6 +15,6 @@ public class ResetFlags {
     }
 
     public static void resetTickSpeed(World world) {
-        worldEffects.setRandomTickSpeed(world, 3);
+        worldUtils.setRandomTickSpeed(world, 3);
     }
 }

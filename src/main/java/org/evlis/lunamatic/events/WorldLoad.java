@@ -8,6 +8,7 @@ import org.bukkit.event.world.WorldLoadEvent;
 import org.bukkit.plugin.Plugin;
 import org.evlis.lunamatic.GlobalVars;
 import org.evlis.lunamatic.utilities.LangManager;
+import org.evlis.lunamatic.utilities.WorldUtils;
 
 import java.util.logging.Logger;
 
@@ -22,6 +23,8 @@ public class WorldLoad implements Listener {
     public void onWorldLoad(WorldLoadEvent event) {
         LangManager langManager = LangManager.getInstance();
         World world = event.getWorld();
+        String worldName = world.getName();
+        //++++++++ SKIP NULL WORLD CHECK HERE ++++++++//
         if (!GlobalVars.disabledWorlds.contains(world.getName())) {
             if (!GlobalVars.currentMoonStateMap.containsKey(world.getName())) {
                 GlobalVars.currentMoonStateMap.put(world.getName(), new GlobalVars.CurrentMoonState());

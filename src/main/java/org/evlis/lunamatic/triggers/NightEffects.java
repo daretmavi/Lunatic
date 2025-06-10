@@ -24,6 +24,5 @@ public class NightEffects {
             });
             PlayerMessage.Send(plugin, player, langManager.getTranslation("wary_feel"), NamedTextColor.DARK_PURPLE);
         }
-
     }
 }

@@ -15,6 +15,7 @@ import org.evlis.lunamatic.triggers.NightEffects;
 import org.evlis.lunamatic.utilities.PlayerMessage;
 import org.evlis.lunamatic.utilities.ResetFlags;
 import org.evlis.lunamatic.utilities.LangManager;
+import org.evlis.lunamatic.utilities.WorldUtils;
 import org.jetbrains.annotations.NotNull;
 
 public class PlayerJoin implements Listener {
@@ -25,6 +26,10 @@ public class PlayerJoin implements Listener {
         Player player = event.getPlayer();
         World world = player.getWorld();
         String worldName = world.getName();
+        //++++++++ ADD NULL WORLD CHECK!!! ++++++++//
+        if (!WorldUtils.isWorldEnabled(worldName)) {
+            return;
+        } // END NULL WORLD CHECK..................
         if (world.getPlayers().isEmpty()) {
             // If the world was empty, there is a chance flags are stuck from
             // the world state the last player left at. Clear all flags to

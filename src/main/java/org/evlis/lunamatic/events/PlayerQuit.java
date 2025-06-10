@@ -10,6 +10,7 @@ import org.bukkit.event.player.PlayerBedEnterEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.evlis.lunamatic.GlobalVars;
 import org.evlis.lunamatic.utilities.PlayerMessage;
+import org.evlis.lunamatic.utilities.WorldUtils;
 import org.jetbrains.annotations.NotNull;
 
 public class PlayerQuit implements Listener {
@@ -18,6 +19,11 @@ public class PlayerQuit implements Listener {
     public void onPlayerQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
         World world = player.getWorld();
+        String worldName = world.getName();
+        //++++++++ ADD NULL WORLD CHECK!!! ++++++++//
+        if (!WorldUtils.isWorldEnabled(worldName)) {
+            return;
+        } // END NULL WORLD CHECK..................
         long time = world.getTime();
         @NotNull MoonPhase moonPhase = world.getMoonPhase();
 
