@@ -13,12 +13,14 @@ import org.evlis.lunamatic.Lunamatic;
 import org.evlis.lunamatic.utilities.NightSummons;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 import static org.evlis.lunamatic.utilities.EquipArmor.equipRandomChainmailArmor;
 
 public class EntitySpawn implements Listener {
 
     Plugin plugin = Lunamatic.getInstance();
+    Logger logger = plugin.getLogger();
     // Custom detection range in blocks (default is 16 for most mobs)
     private static final double BLODMOON_DETECTION_RANGE = 32.0;
     private final NightSummons nightsummon = new NightSummons(plugin);
@@ -31,6 +33,13 @@ public class EntitySpawn implements Listener {
         Entity entity = event.getEntity();
         World world = entity.getWorld();
         String worldName = world.getName();
+        // Skip disabled worlds, or worlds that initialization missed
+        if (GlobalVars.disabledWorlds.contains(worldName)) {
+            return;
+        } else if (!GlobalVars.currentMoonStateMap.containsKey(worldName)) {
+            logger.warning("Spawn event for world '" + worldName + "' failed! World not initialized.");
+            return;
+        }
         if (GlobalVars.currentMoonStateMap.get(worldName).isBloodMoonToday() && GlobalVars.currentMoonStateMap.get(worldName).isBloodMoonNow()) {
             Difficulty difficulty = world.getDifficulty();
             long time = world.getTime();
@@ -94,6 +103,4 @@ public class EntitySpawn implements Listener {
         }
         return nearestPlayer; // Returns null if no players are within the custom detection range
     }
-
-
 }

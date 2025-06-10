@@ -30,7 +30,7 @@ public final class Lunamatic extends JavaPlugin {
     public PlayerQuit playerQuit;
     public PlayerSleep playerSleep;
     public EntitySpawn entitySpawn;
-    private static final Logger logger = Logger.getLogger(Lunamatic.class.getName());
+    private final Logger logger = getLogger();
     private static final String REQUIRED_VERSION = "1.21";
     public static final int REQUIRED_LANG_VER = 2;
     private static final String API_URL ="https://api.modrinth.com/v2/project/lunamatic/version";
@@ -38,12 +38,15 @@ public final class Lunamatic extends JavaPlugin {
     @Override
     public void onEnable() {
         // Begin Initialization
-        //Logger logger = getLogger();
+        // Initialize custom logger
+        logger.setUseParentHandlers(false); // Disable parent handlers to avoid duplicate logging
+        for (java.util.logging.Handler handler : logger.getHandlers()) {
+            logger.removeHandler(handler);
+        }
+        LogHandler handler = new LogHandler();
+        logger.addHandler(handler);
         logger.info("Begin plugin initialization...");
         logger.setUseParentHandlers(false); // Disable parent handlers to avoid duplicate logging
-        LogHandler handler = new LogHandler();
-        handler.setLevel(Level.ALL);
-        logger.addHandler(handler);
 
         // Assign instance variable
         instance = this;

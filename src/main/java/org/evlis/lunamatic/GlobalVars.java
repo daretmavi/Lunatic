@@ -22,10 +22,6 @@ public class GlobalVars {
             }
         }
     }
-    // Null safe moon state getter
-    public static CurrentMoonState getMoonState(@NotNull World world) {
-        return currentMoonStateMap.getOrDefault(world.getName(), new CurrentMoonState());
-    }
     // Test flag
     public static Boolean debug = false;
     // Language version increment

@@ -66,7 +66,6 @@ public class Scheduler {
                     continue; // Skip worlds with no active players
                 }
                 long time = world.getTime();
-                GlobalVars.CurrentMoonState state = GlobalVars.getMoonState(world);
                 // Check if it's the start of the day (0 ticks, 6am)
                 if (time >= 0 && time < 20) {
                     if (GlobalVars.debug) {
