@@ -26,7 +26,7 @@ public class PlayerSleep implements Listener {
         if (!WorldUtils.isWorldEnabled(worldName)) {
             return;
         } // END NULL WORLD CHECK..................
-        if (GlobalVars.currentMoonStateMap.get(world.getName()).isBloodMoonNow()) {
+        if (GlobalVars.currentMoonStateMap.get(world.getName()).isBloodMoonNow() && !GlobalVars.bloodMoonAllowSleep) {
             PlayerMessage.Send(plugin, player, langManager.getTranslation("blood_moon_sleep"), NamedTextColor.RED);
             event.setCancelled(true);
         }

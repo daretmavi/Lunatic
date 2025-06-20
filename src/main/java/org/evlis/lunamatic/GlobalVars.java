@@ -43,7 +43,9 @@ public class GlobalVars {
     public static Boolean harvestMoonSpawnAllay = true;
     public static Boolean newMoonEnabled = true;
     public static Boolean bloodMoonEnabled = true;
+    // Blood Moon Config
     public static Boolean bloodMoonSpawnVex = true;
+    public static Boolean bloodMoonAllowSleep = true;
     // map of how many armor pieces to apply
     public static final Map<Difficulty, Integer> difficultyArmorMap = Map.of(
             Difficulty.PEACEFUL, 0,
