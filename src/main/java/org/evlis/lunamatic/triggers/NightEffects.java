@@ -7,7 +7,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import org.evlis.lunamatic.utilities.PlayerMessage;
+import org.evlis.lunamatic.utilities.players.PlayerMessage;
 import org.evlis.lunamatic.utilities.LangManager;
 
 public class NightEffects {

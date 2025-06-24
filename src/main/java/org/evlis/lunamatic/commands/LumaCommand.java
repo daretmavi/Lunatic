@@ -5,22 +5,18 @@ import co.aikar.commands.annotation.*;
 import io.papermc.paper.world.MoonPhase;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.evlis.lunamatic.GlobalVars;
-import org.evlis.lunamatic.utilities.ResetFlags;
+import org.evlis.lunamatic.utilities.worlds.ResetFlags;
 import org.jetbrains.annotations.NotNull;
 import org.evlis.lunamatic.utilities.LangManager;
 import org.evlis.lunamatic.Lunamatic;
-import org.evlis.lunamatic.utilities.PlayerMessage;
+import org.evlis.lunamatic.utilities.players.PlayerMessage;
 
 import java.util.logging.Logger;
-
-import static org.evlis.lunamatic.Lunamatic.REQUIRED_LANG_VER;
 
 @CommandAlias("luma")
 public class LumaCommand extends BaseCommand {

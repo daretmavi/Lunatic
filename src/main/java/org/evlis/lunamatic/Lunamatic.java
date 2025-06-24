@@ -10,14 +10,13 @@ import org.evlis.lunamatic.commands.LumaCommand;
 import org.evlis.lunamatic.events.*;
 import org.evlis.lunamatic.triggers.Scheduler;
 import org.evlis.lunamatic.utilities.LangManager;
-import org.evlis.lunamatic.utilities.LogHandler;
+import org.evlis.lunamatic.utilities.logging.LogHandler;
 
 import java.io.InputStreamReader;
 import java.lang.module.ModuleDescriptor;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 

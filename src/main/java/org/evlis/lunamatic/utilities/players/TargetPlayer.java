@@ -1,4 +1,4 @@
-package org.evlis.lunamatic.utilities;
+package org.evlis.lunamatic.utilities.players;
 
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;

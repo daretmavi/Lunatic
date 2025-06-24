@@ -1,4 +1,4 @@
-package org.evlis.lunamatic.utilities;
+package org.evlis.lunamatic.utilities.entities;
 
 import org.bukkit.*;
 import org.bukkit.Bukkit;

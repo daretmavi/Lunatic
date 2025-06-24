@@ -12,10 +12,10 @@ import org.bukkit.plugin.Plugin;
 import org.evlis.lunamatic.GlobalVars;
 import org.evlis.lunamatic.Lunamatic;
 import org.evlis.lunamatic.triggers.NightEffects;
-import org.evlis.lunamatic.utilities.PlayerMessage;
-import org.evlis.lunamatic.utilities.ResetFlags;
+import org.evlis.lunamatic.utilities.players.PlayerMessage;
+import org.evlis.lunamatic.utilities.worlds.ResetFlags;
 import org.evlis.lunamatic.utilities.LangManager;
-import org.evlis.lunamatic.utilities.WorldUtils;
+import org.evlis.lunamatic.utilities.worlds.WorldUtils;
 import org.jetbrains.annotations.NotNull;
 
 public class PlayerJoin implements Listener {

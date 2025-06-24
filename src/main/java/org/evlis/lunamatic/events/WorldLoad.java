@@ -1,6 +1,5 @@
 package org.evlis.lunamatic.events;
 
-import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -8,7 +7,6 @@ import org.bukkit.event.world.WorldLoadEvent;
 import org.bukkit.plugin.Plugin;
 import org.evlis.lunamatic.GlobalVars;
 import org.evlis.lunamatic.utilities.LangManager;
-import org.evlis.lunamatic.utilities.WorldUtils;
 
 import java.util.logging.Logger;
 

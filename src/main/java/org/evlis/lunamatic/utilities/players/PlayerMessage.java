@@ -1,4 +1,4 @@
-package org.evlis.lunamatic.utilities;
+package org.evlis.lunamatic.utilities.players;
 
 import io.papermc.paper.threadedregions.scheduler.RegionScheduler;
 import net.kyori.adventure.text.Component;

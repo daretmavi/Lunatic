@@ -1,4 +1,4 @@
-package org.evlis.lunamatic.utilities;
+package org.evlis.lunamatic.utilities.worlds;
 
 import org.bukkit.World;
 import org.bukkit.plugin.Plugin;

@@ -10,13 +10,13 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.evlis.lunamatic.GlobalVars;
 import org.evlis.lunamatic.Lunamatic;
-import org.evlis.lunamatic.utilities.NightSummons;
-import org.evlis.lunamatic.utilities.WorldUtils;
+import org.evlis.lunamatic.utilities.entities.NightSummons;
+import org.evlis.lunamatic.utilities.worlds.WorldUtils;
 
 import java.util.List;
 import java.util.logging.Logger;
 
-import static org.evlis.lunamatic.utilities.EquipArmor.equipRandomChainmailArmor;
+import static org.evlis.lunamatic.utilities.entities.EquipArmor.equipRandomChainmailArmor;
 
 public class EntitySpawn implements Listener {
 

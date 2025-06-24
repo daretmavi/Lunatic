@@ -1,7 +1,6 @@
-package org.evlis.lunamatic.utilities;
+package org.evlis.lunamatic.utilities.entities;
 
 import org.bukkit.Material;
-import org.bukkit.World;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Monster;
 import org.bukkit.inventory.ItemStack;
@@ -9,7 +8,6 @@ import org.bukkit.inventory.ItemStack;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 
 public class EquipArmor {
 

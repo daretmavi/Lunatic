@@ -1,4 +1,4 @@
-package org.evlis.lunamatic.utilities;
+package org.evlis.lunamatic.utilities.logging;
 
 import java.util.logging.Formatter;
 import java.util.logging.LogRecord;
