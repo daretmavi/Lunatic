@@ -28,7 +28,7 @@ public class WorldUtils {
         if (GlobalVars.disabledWorlds.contains(worldName)) {
             return false;
         } else if (!GlobalVars.currentMoonStateMap.containsKey(worldName)) {
-            logger.warning("Spawn event for world '" + worldName + "' failed! World not initialized.");
+            logger.warning("World check for '" + worldName + "' failed! World not initialized.");
             return false;
         }
         return true;
