@@ -1,4 +1,4 @@
-# Czech translation, by Thomas Marek (tommarek)
+# Czech translation, by Thomas
 
 lang_load_success: "Bravo! Jazyk cs_CZ byl načten úspěšně!"
 
@@ -7,7 +7,7 @@ plugin_success_load: "Plugin Lunamatic byl načten úspěsně! Verze: "
 update_check: "Hledám aktulizace..."
 update_found: "Nová verze %a je k dispozici! (vaše verze: v%b)! Novou verzi stáhňete zde: https://modrinth.com/plugin/lunamatic"
 update_error: "Chyba při hledání aktulizace: "
-up_to_date: "Jste aktuální!"
+up_to_date: "Verze Lunamaticu je aktuální."
 
 cmd_running: "Aktuální verze Lunamatic: "
 

@@ -17,7 +17,8 @@ harvestMoonSpawnAllay: true
 bloodMoonEnabled: true
 ## Enable Vex spawning while blood moon is active
 bloodMoonSpawnVex: true
-
+## Enable sleeping during a blood moon
+bloodMoonAllowSleep: false
 # Chance for Blood and Harvest Moons ###
 # This sets the number of sides in the dice roll,
 # e.g. 2 = coin-toss (50/50), 6 = normal die (17% chance)
