@@ -4,20 +4,19 @@ import co.aikar.commands.PaperCommandManager;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
+import net.kyori.adventure.text.logger.slf4j.ComponentLogger;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.evlis.lunamatic.commands.LumaCommand;
 import org.evlis.lunamatic.events.*;
 import org.evlis.lunamatic.triggers.Scheduler;
 import org.evlis.lunamatic.utilities.LangManager;
-import org.evlis.lunamatic.utilities.logging.LogHandler;
 
 import java.io.InputStreamReader;
 import java.lang.module.ModuleDescriptor;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.logging.Logger;
 
 
 public final class Lunamatic extends JavaPlugin {
@@ -29,24 +28,15 @@ public final class Lunamatic extends JavaPlugin {
     public PlayerQuit playerQuit;
     public PlayerSleep playerSleep;
     public EntitySpawn entitySpawn;
-    private final Logger logger = getLogger();
+    private final ComponentLogger logger = getComponentLogger();
 
     private static final String REQUIRED_VERSION = "1.21";
-    public static final int REQUIRED_LANG_VER = 2;
     private static final String API_URL ="https://api.modrinth.com/v2/project/lunamatic/version";
 
     @Override
     public void onEnable() {
         // Begin Initialization
-        // Initialize custom logger
-        logger.setUseParentHandlers(false); // Disable parent handlers to avoid duplicate logging
-        for (java.util.logging.Handler handler : logger.getHandlers()) {
-            logger.removeHandler(handler);
-        }
-        LogHandler handler = new LogHandler();
-        logger.addHandler(handler);
         logger.info("Begin plugin initialization...");
-        logger.setUseParentHandlers(false); // Disable parent handlers to avoid duplicate logging
 
         // Assign instance variable
         instance = this;
