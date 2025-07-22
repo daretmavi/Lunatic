@@ -30,6 +30,7 @@ public final class Lunamatic extends JavaPlugin {
     public PlayerSleep playerSleep;
     public EntitySpawn entitySpawn;
     private final Logger logger = getLogger();
+
     private static final String REQUIRED_VERSION = "1.21";
     public static final int REQUIRED_LANG_VER = 2;
     private static final String API_URL ="https://api.modrinth.com/v2/project/lunamatic/version";

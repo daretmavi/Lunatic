@@ -31,6 +31,7 @@ repositories {
         name = "aikars-framework"
         url = URI("https://repo.aikar.co/content/groups/aikar/")
     }
+
 }
 
 dependencies {

@@ -206,7 +206,7 @@ jobs:
           --name test-folia-server \
           -e EULA=TRUE \
           -e TYPE=FOLIA \
-          -e VERSION=${MC_VERSION} \
+          -e VERSION=1.21.1 \
           -e MAX_TICK_TIME=-1 \
           -e JVM_DD_OPTS=disable.watchdog:true \
           -v ${{ github.workspace }}/plugins:/plugins \
@@ -238,6 +238,7 @@ jobs:
         run: |
           echo "Checking container logs for errors..."
           LOG_OUTPUT=$(docker logs test-folia-server 2>&1)
+          
           ERROR_LINES=$(echo "$LOG_OUTPUT" | grep 'ERROR]:' || true)
           if [ -n "$ERROR_LINES" ]; then
             echo "Errors were found in the server logs:"
