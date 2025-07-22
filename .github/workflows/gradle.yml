@@ -206,7 +206,7 @@ jobs:
           --name test-folia-server \
           -e EULA=TRUE \
           -e TYPE=FOLIA \
-          -e VERSION=1.21.2 \
+          -e VERSION=1.21.4 \
           -e MAX_TICK_TIME=-1 \
           -e JVM_DD_OPTS=disable.watchdog:true \
           -v ${{ github.workspace }}/plugins:/plugins \
