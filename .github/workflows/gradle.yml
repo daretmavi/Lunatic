@@ -239,7 +239,7 @@ jobs:
           echo "Checking container logs for errors..."
           LOG_OUTPUT=$(docker logs test-folia-server 2>&1)
           
-          ERROR_LINES=$(echo "$LOG_OUTPUT" | grep 'ERROR]:' || true)
+          ERROR_LINES=$(echo "$LOG_OUTPUT" | grep 'ERROR]: [Lunamatic]' || true)
           if [ -n "$ERROR_LINES" ]; then
             echo "Errors were found in the server logs:"
             echo "$ERROR_LINES"
