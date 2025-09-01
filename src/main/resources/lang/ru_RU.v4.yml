@@ -1,0 +1,48 @@
+# Russian translation by Rener
+
+lang_load_success: "Язык ru_RU успешно загружен!"
+
+plugin_success_load: "Lunamatic v успешно включён"
+
+update_check: "Проверка обновлений..."
+update_found: "Новая версия %a доступна (вы используете v%b)! Скачать здесь: https://modrinth.com/plugin/lunamatic"
+update_error: "Не удалось проверить обновления: "
+up_to_date: "У вас последняя версия!"
+
+cmd_running: "Вы используете Lunamatic v"
+
+cmd_reload_success: "Lunamatic успешно перезагружен!"
+cmd_reload_fail: "Произошла ошибка в Lunamatic: "
+cmd_reload_warn: "При перезагрузке Lunamatic могут возникнуть проблемы.\nИспользуйте перезагрузку только для тестирования."
+
+cmd_lang: "Загруженный язык: "
+
+cmd_blood_moon_enabled: "Кровавая Луна включена: "
+cmd_blood_moon_now: "Кровавая Луна сейчас: "
+cmd_blood_moon_today: "Кровавая Луна сегодня: "
+
+cmd_harv_moon_enabled: "Луна Урожая включена: "
+cmd_harv_moon_now: "Луна Урожая сейчас: "
+cmd_harv_moon_today: "Луна Урожая сегодня: "
+
+cmd_disabled_worlds: "Отключённые миры: "
+cmd_curr_phase: "Текущая фаза луны для мира "
+
+sched_invalid_blood: "Обнаружена некорректная Кровавая Луна! Пропуск..."
+sched_invalid_harv: "Обнаружена некорректная Луна Урожая! Пропуск..."
+
+sched_daydef_reset: "Сброс значений по умолчанию для дня..."
+
+harvest_moon_tonight: "Сегодня ночью Луна Урожая."
+full_moon_tonight: "Сегодня ночью полнолуние."
+blood_moon_tonight: "Сегодня ночью Кровавая Луна."
+new_moon_tonight: "Сегодня ночью новолуние."
+
+grass_growing: "Ты... слышишь, как растёт трава?"
+lucky_feel: "Ты чувствуешь удачу!"
+wary_feel: "Ты чувствуешь осторожность..."
+
+blood_moon_sleep: "Кровавая Луна сияет! Ты не можешь спать!"
+
+cmd_no_moon_world: "Lunamatic не работает в этом мире!"
+world_load_success: "Мир(ы) успешно загружен(ы): "
