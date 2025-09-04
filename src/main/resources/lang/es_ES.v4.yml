@@ -1,0 +1,48 @@
+# Spanish translation by Rener
+
+lang_load_success: "¡Idioma es_ES cargado correctamente!"
+
+plugin_success_load: "Lunamatic v habilitado correctamente"
+
+update_check: "Buscando actualizaciones..."
+update_found: "Nueva versión %a disponible (estás en la v%b). Descárgala aquí: https://modrinth.com/plugin/lunamatic"
+update_error: "No se pudo comprobar actualizaciones: "
+up_to_date: "¡Ya tienes la última versión!"
+
+cmd_running: "Estás ejecutando Lunamatic v"
+
+cmd_reload_success: "¡Lunamatic recargado con éxito!"
+cmd_reload_fail: "Lunamatic encontró un error: "
+cmd_reload_warn: "Al recargar Lunamatic, podrían ocurrir algunos problemas.\nUsa el recargar solo con fines de prueba."
+
+cmd_lang: "Idioma cargado: "
+
+cmd_blood_moon_enabled: "Luna de Sangre activada: "
+cmd_blood_moon_now: "Luna de Sangre ahora: "
+cmd_blood_moon_today: "Luna de Sangre hoy: "
+
+cmd_harv_moon_enabled: "Luna de Cosecha activada: "
+cmd_harv_moon_now: "Luna de Cosecha ahora: "
+cmd_harv_moon_today: "Luna de Cosecha hoy: "
+
+cmd_disabled_worlds: "Mundos deshabilitados: "
+cmd_curr_phase: "Fase lunar actual para el mundo "
+
+sched_invalid_blood: "¡Luna de Sangre no válida detectada! Saltando..."
+sched_invalid_harv: "¡Luna de Cosecha no válida detectada! Saltando..."
+
+sched_daydef_reset: "Restableciendo valores predeterminados para el día..."
+
+harvest_moon_tonight: "Luna de Cosecha esta noche."
+full_moon_tonight: "Luna llena esta noche."
+blood_moon_tonight: "Luna de Sangre esta noche."
+new_moon_tonight: "Luna nueva esta noche."
+
+grass_growing: "¿Escuchas... crecer el pasto?"
+lucky_feel: "¡Te sientes afortunado!"
+wary_feel: "Te sientes cauteloso..."
+
+blood_moon_sleep: "¡La luna de sangre brilla! ¡No puedes dormir!"
+
+cmd_no_moon_world: "¡Lunamatic no se está ejecutando en este mundo!"
+world_load_success: "Mundo(s) cargado(s) correctamente: "
