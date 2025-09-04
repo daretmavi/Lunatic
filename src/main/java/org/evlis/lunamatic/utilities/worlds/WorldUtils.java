@@ -4,12 +4,14 @@ import org.bukkit.World;
 import org.bukkit.plugin.Plugin;
 import org.evlis.lunamatic.GlobalVars;
 import org.evlis.lunamatic.Lunamatic;
+import org.evlis.lunamatic.utilities.LangManager;
 
 import java.util.logging.Logger;
 
 public class WorldUtils {
     static Plugin plugin = Lunamatic.getInstance();
     static Logger logger = plugin.getLogger();
+    static LangManager langManager = LangManager.getInstance();
 
     public void setRandomTickSpeed(World world, int tickSpeed) {
         world.setGameRule(org.bukkit.GameRule.RANDOM_TICK_SPEED, tickSpeed);
@@ -28,7 +30,9 @@ public class WorldUtils {
         if (GlobalVars.disabledWorlds.contains(worldName)) {
             return false;
         } else if (!GlobalVars.currentMoonStateMap.containsKey(worldName)) {
-            logger.warning("World check for '" + worldName + "' failed! World not initialized.");
+            logger.warning("World check for '" + worldName + "' failed! World not initialized. Fixing...");
+            GlobalVars.currentMoonStateMap.put(worldName, new GlobalVars.CurrentMoonState());
+            logger.info(langManager.getTranslation("world_load_success") + worldName);
             return false;
         }
         return true;

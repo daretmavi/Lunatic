@@ -3,6 +3,7 @@ package org.evlis.lunamatic.events;
 import org.bukkit.World;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.world.WorldEvent;
 import org.bukkit.event.world.WorldLoadEvent;
 import org.bukkit.plugin.Plugin;
 import org.evlis.lunamatic.GlobalVars;
