@@ -40,9 +40,10 @@ new_moon_tonight: "Nov mesiaca bude dnes v noci."
 
 grass_growing: "Pssst.. počuješ ako tráva rastie?"
 lucky_feel: "Cítiš sa byť štastný!"
-wary_feel: "Máš pocit strachu..."
+wary_feel: "Pociťuješ závan strachu..."
 
 blood_moon_sleep: "Krvavý mesiac žiari! Nemôžeš zaspať!"
 
 cmd_no_moon_world: "Lunamatic na tomto svete nebeží!"
+
 world_load_success: "Úspešne načítaný(é) svet(y): "
