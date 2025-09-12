@@ -1,4 +1,4 @@
-# Default english translation, Use as template for translating!
+# Slovak translation by daretmavi
 
 lang_load_success: "Jazyk sk_SK bol úspešne načítaný!"
 
@@ -47,3 +47,4 @@ blood_moon_sleep: "Krvavý mesiac žiari! Nemôžeš zaspať!"
 cmd_no_moon_world: "Lunamatic na tomto svete nebeží!"
 
 world_load_success: "Úspešne načítaný(é) svet(y): "
+
